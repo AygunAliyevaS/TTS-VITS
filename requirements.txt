@@ -1,0 +1,11 @@
+torch
+torchaudio
+gradio
+numpy
+tqdm
+librosa
+matplotlib
+scipy
+soundfile
+speechbrain
+webrtcvad  # optional, required only for VAD

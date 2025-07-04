@@ -1,0 +1,23 @@
+C:\Users\User\Desktop\tts_sdk\exp1\datasets\02.wav | İlham, ağıl, istedad o yerdə dəyərlidir ki, dəyəri verdir. 
+C:\Users\User\Desktop\tts_sdk\exp1\datasets\03.wav | O yerdə qiymətlidir ki, onu əziz tuturlar, ona ehtiyac duyurlar.
+C:\Users\User\Desktop\tts_sdk\exp1\datasets\04.wav | O yerdə ki, istedadın başından basırlar. 
+C:\Users\User\Desktop\tts_sdk\exp1\datasets\05.wav | O yerdə ki, parlaq kimsələri küncə dirilirlər. 
+C:\Users\User\Desktop\tts_sdk\exp1\datasets\06.wav | O yerdə ki, onlardan qat-qat əski yolanları onlardan uca tuturlar.
+C:\Users\User\Desktop\tts_sdk\exp1\datasets\07.wav | O yerdə ki, qarğa qızğınlar o parlaqların üstünə tökülür. 
+C:\Users\User\Desktop\tts_sdk\exp1\datasets\08.wav | Dünya başlarına dar olmasın, ne eləsin. 
+C:\Users\User\Desktop\tts_sdk\exp1\datasets\09.wav | Və bu acı qismət Seyyidəzim Şirvaninin öz talihinlə də keçmişdir.
+C:\Users\User\Desktop\tts_sdk\exp1\datasets\10.wav | Və həmin ağrıları yaşadığındandır ki, məktəblər üçün, uşaqlar üçün yazdığı 
+C:\Users\User\Desktop\tts_sdk\exp1\datasets\11.wav | Rəbiyəl Ətfal kitabına bir hekayətdə daxil eləmişdir. 
+C:\Users\User\Desktop\tts_sdk\exp1\datasets\12.wav | Böyük mütəfəkkir, məşhur sufi şairi şeyh Feridəddin Əddar Çingizxanın istilaları zamanı əsir düşür. 
+C:\Users\User\Desktop\tts_sdk\exp1\datasets\13.wav | Bir moğol onu qətlə getirmək istəyir.
+C:\Users\User\Desktop\tts_sdk\exp1\datasets\14.wav | Bu arada bir başqa moğol qabağa çıxır, deyir, onu öldürmə, sat mənə, min qızıl verirəm sənə.  
+C:\Users\User\Desktop\tts_sdk\exp1\datasets\15.wav | Feridəddin Əddar hiss edir ki, bu qətlə getirmək istəyən, deyəsən, razılaşan kimidir. 
+C:\Users\User\Desktop\tts_sdk\exp1\datasets\16.wav | İllənir ki, tələsmə, satmə məni, mənim qiymətim daha baxadır.
+C:\Users\User\Desktop\tts_sdk\exp1\datasets\17.wav | O qətlə getirmək istəyən qərarı alır ki, gözləsin. 
+C:\Users\User\Desktop\tts_sdk\exp1\datasets\18.wav | Bir az keçir, bir başqa moğol yaxınlaşır ona, deyir ki, bunu satmaq istəyirsən, sən sat mənə. 
+C:\Users\User\Desktop\tts_sdk\exp1\datasets\19.wav | Bir torba saman verirəm sənə, fikirə dalır Feridəddin Əddar.
+C:\Users\User\Desktop\tts_sdk\exp1\datasets\20.wav | Deyir, hə, indi sata bilərsən, elə mənim qiymətim bu qədərmiş. 
+C:\Users\User\Desktop\tts_sdk\exp1\datasets\21.wav | Seydəzimin talih kitabı əvvəldən əyr-öylü yazıldı. 
+C:\Users\User\Desktop\tts_sdk\exp1\datasets\22.wav | Qlav kiçikliyindən Tanrı ona istedad, fərasət, qaviliyyət bağışladı.
+C:\Users\User\Desktop\tts_sdk\exp1\datasets\23.wav | Qlav kiçikliyindən Tanrı ona istedad, fərasət, qaviliyyət bağışladı.
+C:\Users\User\Desktop\tts_sdk\exp1\datasets\24.wav | Amma uşaqlıq illərindən başlayaraq ta ömürdən sonuna can, ağrılar, acılar, niskillər də daim onu müşahid etdi. 

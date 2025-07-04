@@ -1,0 +1,16 @@
+{
+  "model": {
+    "hidden_channels": 192,
+    "decoder_channels": 512,
+    "resblock_kernel_sizes": [3,7,11],
+    "upsample_rates": [8,8,2,2],
+    "upsample_kernel_sizes": [16,16,4,4],
+    "num_mels": 80
+  },
+  "audio": {
+    "sampling_rate": 22050,
+    "hop_length": 256,
+    "win_length": 1024,
+    "n_fft": 1024
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "train": {
+    "batch_size": 16,
+    "learning_rate": 2e-4,
+    "max_epochs": 1000
+  },
+  "model": {
+    "hidden_channels": 192,
+    "spk_embed_dim": 64,
+    "n_layers": 6,
+    "n_heads": 2,
+    "use_sdp": true,
+    "vocab_size": 100,
+    "audio_channels": 80,
+    "decoder_channels": 512,
+    "upsample_rates": [8, 8, 2, 2],
+    "upsample_kernel_sizes": [16, 16, 4, 4]
+  },
+  "data": {
+    "training_files": "filelists/train.txt",
+    "validation_files": "filelists/val.txt",
+    "sampling_rate": 22050,
+    "filter_length": 1024,
+    "hop_length": 256,
+    "win_length": 1024
+  }
+}
