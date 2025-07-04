@@ -2,7 +2,15 @@
   "train": {
     "batch_size": 16,
     "learning_rate": 2e-4,
-    "max_epochs": 1000
+    "max_epochs": 1000,
+    "checkpoint_interval": 5,
+    "log_interval": 50,
+    "grad_accum_steps": 1,
+    "num_workers": 4,
+    "recon_weight": 1.0,
+    "kl_weight": 0.1,
+    "dur_weight": 0.1,
+    "val_batch_size": 16
   },
   "model": {
     "hidden_channels": 192,
@@ -22,6 +30,11 @@
     "sampling_rate": 22050,
     "filter_length": 1024,
     "hop_length": 256,
-    "win_length": 1024
-  }
-}
+    "win_length": 1024,
+    "max_audio_length": 8.0,
+    "min_audio_length": 1.0,
+    "use_phonemes": false,
+    "lowercase": true
+  },
+  "checkpoint_dir": "checkpoints"
+} 

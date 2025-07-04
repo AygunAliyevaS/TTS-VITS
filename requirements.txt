@@ -1,11 +1,25 @@
-torch
-torchaudio
-gradio
-numpy
-tqdm
-librosa
-matplotlib
-scipy
-soundfile
-speechbrain
-webrtcvad  # optional, required only for VAD
+# Core dependencies
+torch>=2.0.1
+torchaudio>=2.0.1
+numpy>=1.23.5
+matplotlib>=3.7.1
+
+# Audio processing
+librosa>=0.10.0
+scipy>=1.10.1
+soundfile>=0.12.1
+webrtcvad>=2.0.10  # optional, required only for VAD functionality
+
+# Text processing
+pyyaml>=6.0
+
+# User interface
+gradio>=3.34.0
+
+# Training and utilities
+tqdm>=4.65.0
+tensorboard>=2.12.0
+einops>=0.6.1
+
+# Optional: speech preprocessing
+speechbrain>=0.5.14  # optional, required only for speaker embeddings

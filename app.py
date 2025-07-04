@@ -1,129 +1,220 @@
+"""
+Gradio web interface for VITS Azerbaijani TTS.
+
+This module provides a web interface for the VITS TTS model using Gradio,
+allowing users to input text and generate speech.
+"""
+
 import torch
 import gradio as gr
-import sys
 import os
+import sys
+import logging
+from pathlib import Path
+import time
 
-# Attempt to import the necessary module with fallback
-try:
-    from speechbrain.inference.classifiers import EncoderClassifier
-    print("Import successful for EncoderClassifier")
-except ImportError:
-    print("Failed to import speechbrain.inference.classifiers.EncoderClassifier directly.")
-    print("Attempting to import speechbrain.pretrained.EncoderClassifier (deprecated)")
-    try:
-        from speechbrain.pretrained import EncoderClassifier
-        print("Import successful for EncoderClassifier")
-    except ImportError:
-        print("Failed to import EncoderClassifier from speechbrain. Please ensure speechbrain is installed correctly.")
-        sys.exit(1) # Exit if import fails
+# Add project root to path
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
+# Import local modules
+from model.vits import VITS
+from data.text.text_processor import TextProcessor
+from utils.common import load_config, setup_logger
 
-from model.vits import VITS # Assuming vits model is defined here
-import json # Assuming you need json for model config
+# Set up logger
+setup_logger("logs/app.log")
+logger = logging.getLogger(__name__)
 
-# Device configuration
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-
-# Load model configuration (assuming base_vits.json is the correct config)
-try:
-    with open('configs/base_vits.json') as f:
-        config = json.load(f)
-except FileNotFoundError:
-    print("Error: configs/base_vits.json not found.")
-    sys.exit(1)
-
-
-# Initialize the model
-model = VITS(config).to(device)
-
-# Load the model state dictionary
-# Assuming 'best_model.pth' is the saved checkpoint from training
-# checkpoint_path = 'checkpoints/best_model.pth' # Original path
-checkpoint_path = 'checkpoints/checkpoint_182.pth' # Trying a different checkpoint
-
-
-if os.path.exists(checkpoint_path):
-    try:
-        checkpoint = torch.load(checkpoint_path, map_location=device)
-        model.load_state_dict(checkpoint['model_state_dict'])
-        print(f"Successfully loaded model from {checkpoint_path}")
-    except Exception as e:
-        print(f"Error loading model state dictionary: {e}")
-        sys.exit(1)
-else:
-    print(f"Error: Model checkpoint not found at {checkpoint_path}")
-    sys.exit(1)
-
-# Azerbaijani alphabet (with specific letters like Ə, Ğ, Ö, Ş, Ç, Ü)
-az_chars = list("AÄBCÇDEƏFGĞHIİJKQLMNOÖPRSŞTUÜVXYZaäbcçdeəfgğhiijkqlmnoöprsştuüvxyz0123456789 .,!?'-")
-
-# Ensure we fit the vocab limit
-# Pad with <pad> or clip extra chars if needed
-unique_chars = az_chars[:100]  # Adjust to fit vocab_size
-
-# Create mapping dicts
-char_to_symbol = {char: idx for idx, char in enumerate(unique_chars)}
-symbol_to_char = {idx: char for char, idx in char_to_symbol.items()}
-
-def text_to_sequence(text):
-    """Convert text to sequence of indices, with better error handling."""
-    try:
-        # Convert text to lowercase and filter out unknown characters
-        text = text.lower().strip()
-        sequence = [char_to_symbol.get(c, char_to_symbol.get(' ', 0)) for c in text]
-        print(f"Converted text to sequence. Length: {len(sequence)}")
-        return sequence
-    except Exception as e:
-        print(f"Error in text_to_sequence: {e}")
-        return None
-
-def inference(text, speaker_id=0):
-    if not text or not text.strip():
-        print("Error: Empty input text")
-        return None
-        
-    print(f"Input text: '{text}'")
+class TTS_App:
+    """
+    VITS TTS web application.
     
-    sequence = text_to_sequence(text)
-    if not sequence:
-        print("Error: Failed to convert text to sequence")
-        return None
-
-    try:
-        x = torch.LongTensor(sequence).unsqueeze(0).to(device)
-        print(f"Input tensor shape: {x.shape}")
+    This class encapsulates the TTS application functionality, including model loading,
+    text processing, and audio generation.
+    """
+    def __init__(self, config_path='config/base_vits.json', checkpoint_path='checkpoints/best_model.pth'):
+        """Initialize the TTS application."""
+        logger.info("Initializing TTS application")
         
-        audio = model.generate(x)
+        # Configure device
+        self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        logger.info(f"Using device: {self.device}")
         
-        if audio is None:
-            print("Error: Model returned None")
-            return None
+        # Load configuration
+        self.config = load_config(config_path)
+        
+        # Initialize model
+        self.model = self._load_model(checkpoint_path)
+        
+        # Initialize text processor
+        self.text_processor = TextProcessor(self.config)
+        
+        logger.info("TTS application initialized successfully")
+    
+    def _load_model(self, checkpoint_path):
+        """Load the VITS model from checkpoint."""
+        try:
+            model = VITS(self.config).to(self.device)
             
-        print(f"Generated audio shape: {audio.shape if hasattr(audio, 'shape') else 'N/A'}")
-        print(f"Audio stats - min: {audio.min()}, max: {audio.max()}, mean: {audio.mean()}")
+            if os.path.exists(checkpoint_path):
+                logger.info(f"Loading model checkpoint from {checkpoint_path}")
+                checkpoint = torch.load(checkpoint_path, map_location=self.device)
+                
+                # Handle different checkpoint formats
+                if 'model_state_dict' in checkpoint:
+                    model.load_state_dict(checkpoint['model_state_dict'])
+                else:
+                    model.load_state_dict(checkpoint)
+                    
+                logger.info("Model checkpoint loaded successfully")
+            else:
+                logger.warning(f"Checkpoint not found at {checkpoint_path}, using untrained model")
+                
+            model.eval()
+            return model
         
-        # Ensure audio is in the correct range [-1, 1]
-        if audio.max() > 1.0 or audio.min() < -1.0:
-            print("Warning: Audio values out of [-1, 1] range, normalizing...")
-            audio = torch.clamp(audio, -1.0, 1.0)
+        except Exception as e:
+            logger.error(f"Error loading model: {str(e)}")
+            import traceback
+            logger.error(traceback.format_exc())
+            raise RuntimeError(f"Failed to load model: {str(e)}")
+    
+    def generate_speech(self, text, speaker_id=0, speed=1.0, seed=None):
+        """
+        Generate speech from text.
         
-        sampling_rate = config['data']['sampling_rate']
-        return (sampling_rate, audio)
+        Args:
+            text (str): Input text to synthesize
+            speaker_id (int): Speaker ID for multi-speaker models
+            speed (float): Speed adjustment factor (0.5 to 2.0)
+            seed (int): Random seed for deterministic generation
+                
+        Returns:
+            tuple: (sampling_rate, audio_array)
+        """
+        if not text or not text.strip():
+            logger.warning("Empty input text")
+            return (self.config['data']['sampling_rate'], torch.zeros(1000).numpy())
+        
+        logger.info(f"Generating speech for text: '{text}', speaker_id: {speaker_id}, speed: {speed}")
+        
+        # Set seed for reproducibility if provided
+        if seed is not None:
+            torch.manual_seed(seed)
+        
+        try:
+            # Process text
+            start_time = time.time()
+            encoded_text = self.text_processor.encode_text(text)
+            logger.debug(f"Text encoded in {time.time() - start_time:.3f} seconds")
+            
+            # Add batch dimension
+            encoded_text = encoded_text.unsqueeze(0).to(self.device)
+            
+            # Generate audio
+            with torch.no_grad():
+                start_time = time.time()
+                audio = self.model.generate(encoded_text, speed_adjustment=speed)
+                logger.debug(f"Audio generated in {time.time() - start_time:.3f} seconds")
+            
+            # Convert to numpy for Gradio
+            audio_np = audio.cpu().numpy().squeeze()
+            
+            # Apply normalization
+            if audio_np.max() > 1.0 or audio_np.min() < -1.0:
+                audio_np = audio_np / max(abs(audio_np.max()), abs(audio_np.min()))
+            
+            return (self.config['data']['sampling_rate'], audio_np)
+            
+        except Exception as e:
+            logger.error(f"Error generating speech: {str(e)}")
+            import traceback
+            logger.error(traceback.format_exc())
+            return (self.config['data']['sampling_rate'], torch.zeros(1000).numpy())
+
+def create_gradio_interface():
+    """Create the Gradio interface for the TTS application."""
+    # Parse command-line arguments
+    import argparse
+    parser = argparse.ArgumentParser(description="Run VITS TTS web interface")
+    parser.add_argument('--config', type=str, default='config/base_vits.json',
+                       help='Path to configuration file')
+    parser.add_argument('--checkpoint', type=str, default='checkpoints/best_model.pth',
+                       help='Path to model checkpoint')
+    parser.add_argument('--share', action='store_true',
+                       help='Create a public link for the interface')
+    args = parser.parse_args()
+    
+    try:
+        # Initialize TTS application
+        tts_app = TTS_App(args.config, args.checkpoint)
+        
+        # Example Azerbaijani texts
+        examples = [
+            ["Salam dünya, bu bir səs sintezi nümunəsidir."],
+            ["Azərbaycan dili gözəl bir dildir."],
+            ["Bu sistem Azərbaycan dili üçün hazırlanmışdır."]
+        ]
+        
+        # Create Gradio interface
+        interface = gr.Interface(
+            fn=tts_app.generate_speech,
+            inputs=[
+                gr.Textbox(
+                    label="Text",
+                    placeholder="Azərbaycanca mətn daxil edin...",
+                    lines=3
+                ),
+                gr.Number(
+                    label="Speaker ID",
+                    value=0,
+                    precision=0
+                ),
+                gr.Slider(
+                    label="Speed",
+                    minimum=0.5,
+                    maximum=2.0,
+                    step=0.1,
+                    value=1.0
+                ),
+                gr.Number(
+                    label="Random Seed (optional)",
+                    value=None
+                )
+            ],
+            outputs=gr.Audio(
+                label="Generated Speech"
+            ),
+            title="VITS Azerbaijani Text-to-Speech",
+            description=(
+                "Enter text in Azerbaijani to generate speech. "
+                "The model supports Azerbaijani-specific characters (Əə, Ğğ, Iı, İi, Öö, Üü, Çç, Şş)."
+            ),
+            examples=examples,
+            article=(
+                "This demo showcases a VITS (Variational Inference with Adversarial Learning for End-to-End Text-to-Speech) "
+                "model trained for the Azerbaijani language. The model combines a conditional VAE with "
+                "adversarial training and a stochastic duration predictor to generate high-quality speech."
+            )
+        )
+        
+        return interface, args.share
         
     except Exception as e:
-        print(f"Error during inference: {str(e)}")
+        logger.error(f"Error creating interface: {str(e)}")
         import traceback
-        traceback.print_exc()
-        return None
-
-# Create Gradio interface
-iface = gr.Interface(
-    fn=inference,
-    inputs=[gr.Textbox(label="Text Input"), gr.Number(label="Speaker ID", value=0)],
-    outputs=gr.Audio(label="Generated Audio"),
-    title="VITS Text-to-Speech",
-    description="Enter text and generate speech using a trained VITS model."
-)
+        logger.error(traceback.format_exc())
+        
+        # Fallback to a simple interface explaining the error
+        return gr.Interface(
+            fn=lambda x: "Error initializing TTS model. Please check logs.",
+            inputs=gr.Textbox(),
+            outputs=gr.Textbox(),
+            title="VITS TTS Error",
+            description=f"Error initializing TTS model: {str(e)}"
+        ), False
 
 if __name__ == "__main__":
-    iface.launch(debug=True, share=True) # Added debug=True
+    # Create and launch interface
+    interface, share = create_gradio_interface()
+    interface.launch(debug=True, share=share)

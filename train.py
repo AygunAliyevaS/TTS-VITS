@@ -1,111 +1,160 @@
+#!/usr/bin/env python3
+"""
+Training script for VITS Azerbaijani TTS.
+
+This script trains the VITS model using the provided configuration.
+"""
+
 import torch
+import argparse
 import os
+import sys
+import logging
+from pathlib import Path
 from torch.utils.data import DataLoader
+import numpy as np
+import random
+
+# Add project root to path
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
+# Import local modules
 from model.vits import VITS
-from model.duration import StochasticDurationPredictor
-import json
-import torchaudio
-from torchaudio.transforms import MelSpectrogram
+from data.processing import AudioProcessor
+from data.dataset import VITSDataset
+from data.text.text_processor import TextProcessor
+from training.trainer import VITSTrainer
+from utils.common import setup_logger, load_config, prepare_device
 
-# Device configuration
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-
-with open('configs/base_vits.json') as f:
-    config = json.load(f)
-
-# Load HiFiGAN config
-with open('configs/hifigan.json') as f:
-    hifigan_config = json.load(f)
-
-# Initialize model
-model = VITS(config).to(device)
-
-# Mel-spectrogram transform for reconstruction loss
-mel_transform = MelSpectrogram(
-    sample_rate=config['data']['sampling_rate'],
-    n_fft=config['data']['filter_length'],
-    win_length=config['data']['win_length'],
-    hop_length=config['data']['hop_length'],
-    n_mels=config['model']['audio_channels']
-).to(device)
-
-base_lr = config['train']['learning_rate']
-warmup_epochs = 5
-optimizer = torch.optim.Adam(model.parameters(), lr=base_lr)
-
-# Dummy dataset
-class TTSCollator:
-    def __call__(self, batch):
-        return {
-            'text': torch.randint(0, 100, (len(batch), 50)),
-            'audio': torch.randn(len(batch), 80, 200)  # 80-channel mel-spectrogram
-        }
-
-train_loader = DataLoader(
-    range(100),  # Dummy dataset
-    batch_size=config['train']['batch_size'],
-    collate_fn=TTSCollator()
-)
-
-# Create checkpoint directory
-checkpoint_dir = 'checkpoints'
-if not os.path.exists(checkpoint_dir):
-    os.makedirs(checkpoint_dir)
-
-best_loss = float('inf')
-# Training loop
-for epoch in range(config['train']['max_epochs']):
-    for batch in train_loader:
-        text = batch['text'].to(device)
-        audio = batch['audio'].to(device)
-        
-        output, dur_logits, mu, log_var, *_ = model(text, audio)
-        
-        # Compute mel-spectrogram from model output waveform
-        waveform = output.squeeze(1)  # [B, T]
-        mel_output = mel_transform(waveform)
-        
-        # Align time dimension with target mel
-        min_len = min(mel_output.size(-1), audio.size(-1))
-        mel_output = mel_output[..., :min_len]
-        audio = audio[..., :min_len]
-        
-        # Calculate losses
-        recon_loss = torch.nn.functional.l1_loss(mel_output, audio)
-        kl_loss = -0.5 * torch.mean(1 + log_var - mu.pow(2) - log_var.exp())
-        dur_loss = torch.nn.functional.mse_loss(dur_logits, torch.randn_like(dur_logits))
-        
-        total_loss = recon_loss + kl_loss + dur_loss
-        
-        optimizer.zero_grad()
-        total_loss.backward()
-        
-        # Gradient clipping
-        torch.nn.utils.clip_grad_norm_(model.parameters(), 5.0)
-        
-        optimizer.step()
-        
-        # Learning rate warmup
-        current_lr = base_lr * min(epoch / warmup_epochs, 1.0)
-        for param_group in optimizer.param_groups:
-            param_group['lr'] = current_lr
-        
-        print(f'Epoch {epoch} Loss: {total_loss.item():.4f}')
+def main():
+    """Main training function."""
+    parser = argparse.ArgumentParser(description="Train VITS TTS model")
+    parser.add_argument(
+        '--config', type=str, default='config/base_vits.json',
+        help='Path to configuration file'
+    )
+    parser.add_argument(
+        '--checkpoint', type=str, default=None,
+        help='Path to checkpoint to resume training from'
+    )
+    parser.add_argument(
+        '--output_dir', type=str, default=None,
+        help='Directory to save checkpoints and logs'
+    )
+    parser.add_argument(
+        '--log_file', type=str, default=None,
+        help='Path to log file'
+    )
+    parser.add_argument(
+        '--seed', type=int, default=1234,
+        help='Random seed'
+    )
+    parser.add_argument(
+        '--n_gpus', type=int, default=1,
+        help='Number of GPUs to use'
+    )
     
-    # Save checkpoint
-    torch.save({
-        'model_state_dict': model.state_dict(),
-        'optimizer_state_dict': optimizer.state_dict(),
-        'epoch': epoch,
-        'loss': total_loss.item()
-    }, os.path.join(checkpoint_dir, f'checkpoint_{epoch}.pth'))
+    args = parser.parse_args()
     
-    # Update best model
-    if total_loss.item() < best_loss:
-        best_loss = total_loss.item()
-        torch.save({
-            'model_state_dict': model.state_dict(),
-            'optimizer_state_dict': optimizer.state_dict(),
-            'epoch': epoch,
-            'loss': total_loss.item()
-        }, os.path.join(checkpoint_dir, 'best_model.pth'))
+    # Setup logging
+    log_file = args.log_file
+    if log_file is None and args.output_dir is not None:
+        log_file = os.path.join(args.output_dir, 'train.log')
+    
+    setup_logger(log_file, level=logging.INFO)
+    logger = logging.getLogger(__name__)
+    
+    logger.info(f"Starting VITS training with config: {args.config}")
+    
+    # Set random seed
+    torch.manual_seed(args.seed)
+    np.random.seed(args.seed)
+    random.seed(args.seed)
+    
+    # Load config
+    config = load_config(args.config)
+    
+    # Update config with command line args
+    if args.output_dir is not None:
+        config['checkpoint_dir'] = args.output_dir
+        os.makedirs(args.output_dir, exist_ok=True)
+    
+    # Prepare device
+    device = prepare_device(args.n_gpus)
+    logger.info(f"Using device: {device}")
+    
+    # Initialize model
+    logger.info("Initializing VITS model")
+    model = VITS(config)
+    
+    # Initialize processors
+    logger.info("Initializing processors")
+    audio_processor = AudioProcessor(config)
+    text_processor = TextProcessor(config)
+    
+    # Initialize datasets
+    logger.info("Initializing datasets")
+    train_dataset = VITSDataset(
+        config=config,
+        filelist_path=config['data']['training_files'],
+        audio_processor=audio_processor,
+        text_processor=text_processor,
+        is_validation=False
+    )
+    
+    val_dataset = None
+    if config['data'].get('validation_files'):
+        val_dataset = VITSDataset(
+            config=config,
+            filelist_path=config['data']['validation_files'],
+            audio_processor=audio_processor,
+            text_processor=text_processor,
+            is_validation=True
+        )
+    
+    # Initialize data loaders
+    logger.info("Initializing data loaders")
+    train_loader = DataLoader(
+        train_dataset,
+        batch_size=config['train']['batch_size'],
+        shuffle=True,
+        num_workers=config['train'].get('num_workers', 4),
+        collate_fn=VITSDataset.collate_fn,
+        pin_memory=True,
+        drop_last=True
+    )
+    
+    val_loader = None
+    if val_dataset is not None:
+        val_loader = DataLoader(
+            val_dataset,
+            batch_size=config['train'].get('val_batch_size', 16),
+            shuffle=False,
+            num_workers=config['train'].get('num_workers', 4),
+            collate_fn=VITSDataset.collate_fn,
+            pin_memory=True
+        )
+    
+    # Initialize trainer
+    logger.info("Initializing trainer")
+    trainer = VITSTrainer(
+        model=model,
+        config=config,
+        train_loader=train_loader,
+        val_loader=val_loader,
+        device=device
+    )
+    
+    # Load checkpoint if provided
+    if args.checkpoint is not None:
+        logger.info(f"Loading checkpoint from {args.checkpoint}")
+        trainer.load_checkpoint(args.checkpoint)
+    
+    # Train model
+    logger.info("Starting training")
+    trainer.train(config['train'].get('max_epochs', 1000))
+    
+    logger.info("Training complete!")
+
+if __name__ == "__main__":
+    main()
