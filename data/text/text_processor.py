@@ -30,7 +30,7 @@ class TextProcessor:
         # Define Azerbaijani character set (uppercase, lowercase, digits, and special chars)
         # This includes the specific Azerbaijani characters: Əə, Ğğ, Iı, İi, Öö, Üü, Çç, Şş
         self.chars = list("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
-                         "ƏəĞğIıİiÖöÜüÇçŞş0123456789 .,!?'-")
+                         "ƏəĞğIıİiÖöÜüÇçŞş0123456789 .,!?'-\"(){}:;[]")
         
         # Special tokens
         self.pad_token = "<pad>"
@@ -82,9 +82,18 @@ class TextProcessor:
         # Normalize Unicode characters (NFD -> NFC)
         text = unicodedata.normalize('NFC', text)
         
-        # Replace common punctuation variations
-        text = re.sub(r'[""]', '"', text)
-        text = re.sub(r'['']', "'", text)
+        # Replace typographic quotation marks with ASCII equivalents
+        # Double-quotes: « », “ ”, and ASCII " → "
+        text = re.sub(r'["«»“”]', '"', text)
+        # Single quotes / apostrophes: ' ' ' ʻ ʼ ` → '
+        text = re.sub(r'[‘’ʼ`]', "'", text)
+
+        # Strip any remaining combining accents/diacritics (e.g. U+0307 COMBINING DOT ABOVE)
+        # that sneak in from sloppy annotations. We decompose to NFD, filter out combining
+        # marks, then re-compose back to NFC so Azerbaijani characters like "ə" survive.
+        text = unicodedata.normalize('NFD', text)
+        text = ''.join(ch for ch in text if unicodedata.category(ch) != 'Mn')
+        text = unicodedata.normalize('NFC', text)
         
         # Replace multiple spaces with single space
         text = re.sub(r'\s+', ' ', text)

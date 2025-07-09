@@ -121,8 +121,18 @@ class AudioProcessor:
             frame = audio_np[i*frame_size:(i+1)*frame_size]
             # Convert to 16-bit PCM
             frame_pcm = (frame * 32768).astype(np.int16).tobytes()
-            if self.vad.is_speech(frame_pcm, self.sampling_rate):
-                voiced_frames.append(frame)
+            try:
+                if self.vad.is_speech(frame_pcm, self.sampling_rate):
+                    voiced_frames.append(frame)
+            except Exception as e:
+                # Any failure from webrtcvad (regardless of exact exception
+                # class) is treated as non-fatal: we log and fall back to the
+                # untrimmed waveform so that the DataLoader worker does not
+                # propagate un-picklable C-extension exceptions.
+                logger.warning(
+                    "VAD failed on a frame – returning unmodified audio. "
+                    f"Details: {type(e).__name__}: {e}")
+                return waveform
                 
         # Reconstruct audio
         if voiced_frames:
@@ -142,17 +152,33 @@ class AudioProcessor:
         Returns:
             Tensor: Mel-spectrogram [n_mel_channels, T']
         """
-        # Ensure waveform is on the same device as the mel transform
-        device = next(self.mel_transform.parameters()).device
-        waveform = waveform.to(device)
+        # Ensure the waveform is on the same device as the mel transform's
+        # internal buffers.  `MelSpectrogram` typically has *no* trainable
+        # parameters, so calling `next(self.mel_transform.parameters())` would
+        # raise `StopIteration` on some PyTorch versions, crashing DataLoader
+        # workers.  Instead, we look for a registered buffer (e.g. the mel
+        # filter bank) to infer the device – or fall back to CPU if none are
+        # found.
         
-        # Extract mel-spectrogram
+        # Try to detect a buffer to determine the transform's current device
+        transform_device = None
+        for _buf in self.mel_transform.buffers():
+            transform_device = _buf.device
+            break  # First buffer is enough
+        if transform_device is None:
+            # No buffers registered (unlikely), assume CPU
+            transform_device = torch.device('cpu')
+
+        # Move waveform to the transform's device (usually CPU)
+        waveform = waveform.to(transform_device)
+
+        # Extract mel-spectrogram (amplitude)
         mel = self.mel_transform(waveform)
         
-        # Convert to log mel-spectrogram
+        # Convert to log mel-spectrogram to stabilise training
         mel = torch.log(torch.clamp(mel, min=1e-5))
         
-        return mel.squeeze(0)  # Remove batch dimension
+        return mel.squeeze(0)  # Remove channel dim
     
     def process_audio_file(self, file_path, apply_vad=True):
         """
@@ -177,4 +203,30 @@ class AudioProcessor:
             'mel_spectrogram': mel_spectrogram,
             'sampling_rate': sr,
             'file_path': file_path
-        } 
+        }
+
+    # ------------------------------------------------------------------
+    # Pickle support: webrtcvad.Vad instances are CPython extension objects
+    # that cannot be pickled.  When the VITSDataset is wrapped by a DataLoader
+    # with multiple worker processes, the dataset (and therefore this
+    # AudioProcessor) is pickled before being sent to each worker.
+    #
+    # We therefore strip the non-picklable `self.vad` field during pickling and
+    # recreate it after unpickling so that the worker process still has a fully
+    # functional AudioProcessor instance.
+    # ------------------------------------------------------------------
+
+    def __getstate__(self):
+        """Return picklable state (drop the un-picklable VAD object)."""
+        state = self.__dict__.copy()
+        # Remove the VAD instance – it cannot be pickled
+        if '_has_vad' in globals() and globals()['_has_vad']:
+            state.pop('vad', None)
+        return state
+
+    def __setstate__(self, state):
+        """Restore state and recreate the VAD object if available."""
+        self.__dict__.update(state)
+        if '_has_vad' in globals() and globals()['_has_vad']:
+            # Re-instantiate the VAD detector in the worker process
+            self.vad = webrtcvad.Vad(3) 

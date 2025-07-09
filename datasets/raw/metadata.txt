@@ -1,0 +1,100 @@
+datasets/raw/0000.wav|Məsələ bundadır ki, KXDR-in mal dövriyyəsinin 90% -i Çin üzərindən, bu ölkənin Şimali Koreya sərhədinə yaxın yerləşən Dandun və Şenyanq bölgələrində xəstəlik halları qeydə alınmışdı.
+datasets/raw/0001.wav|Bu baxımdan Gəncəyə digər şəhər və rayonlardan gələn vətəndaşlara məhdudiyyətlər yaranıb.
+datasets/raw/0002.wav|Suya bir neçə tablet aspirin və ya aktivləşdirilmiş kömür qoymaq lazımdır.
+datasets/raw/0003.wav|Bəzi hallarda tarixi binaları sökürlər, onların yerində eybəcər hündürmərtəbəli binalar tikirlər.
+datasets/raw/0004.wav|Daha əvvəl Cənubi Afrika Prezidenti Siril Ramafosa bütün ölkə ərazisində 21 günlük karantinin tətbiq olunduğunu açıqlayıb.
+datasets/raw/0005.wav|az xəbər verir ki, əgər oktyabrın 29-da iş adamının sərvəti “Bloomberg Billionaires İndex”də 20,1 milyard dollar idisə, hazırda bu məbləğ 20,9 milyard dollar təşkil edir.
+datasets/raw/0006.wav|az xəbər verir ki, Təhsil Nazirliyi koronavirus təhlükəsi ilə əlaqədar ümumi təhsil müəssisələrində tibb otaqlarının zəruri tibbi ləvazimatlarla təchiz olunmasına nəzarətin artırılmasıni tapşırıb.
+datasets/raw/0007.wav|Həmçinin, 1 milyondan çox azərbaycanlı qaçqın və məcburi köçkünün öz evinə dönməsinə imkan vermir.
+datasets/raw/0008.wav|Bakı Ağır Cinayətlər Məhkəməsində rüşvət almaqda ittiham edilən Namiq Əsədovun cinayət işi üzrə məhkəmə prosesi keçirilib.
+datasets/raw/0009.wav|“Heç bir virusun laboratoriyamızı tərk edə bilməməsi üçün bir sıra tədbirlər görmüşük”, - deyə, Uhan Dövlət Biomühafizə Laboratoriyasının direktoru Yuan Cjimin bildirib.
+datasets/raw/0010.wav|Tramp əslində nə yazmaq istədiyini isə hələ də açıqlamayıb.
+datasets/raw/0011.wav|Koronavirus epidemiyası səbəbindən bir çox müəssisə Çin şəhərlərində iş yerlərini ya bağlatıb və ya azaldılmış iş rejiminə keçib.
+datasets/raw/0012.wav|Əlbəttə ki, söhbət nəqliyyat vasitəsinin özündən getmir, onun "ölmüş" akkumlyatorunun elektrik enerjisi ilə qidalandırmaqdan gedir.
+datasets/raw/0013.wav|Məktəbəqədər hazırlıq keçməyən uşaqların qeyri dildə tədrisə qəbul edilməsi həmin dildəki nitq qabiliyyətinin yoxlandığı müsahibənin nəticələrinə görə aparılır.
+datasets/raw/0014.wav|Beləliklə, alimlər səhər sağ ayaqdan qalxmağı tövsiyə edirlər.
+datasets/raw/0015.wav|Əlbəttə ki, tableti yalnız təmiz suya əlavə etmək lazımdır, hansı ki, onu tez-tez dəyişdirmək lazımdır.
+datasets/raw/0016.wav|Gürcüstanın “Mtavari Arxi” televiziya şirkətinin jurnalisti Georgi Qabuniya erməniləri təhqir edib.
+datasets/raw/0017.wav|az-a  istinadən xəbər verir ki, bu sözləri türkiyəli siyasi ekspert Lütfi Özşahin bildirib.
+datasets/raw/0018.wav|Belə ki, Bakı vaxtı ilə saat 05:48-ə olan duruma görə, “Brent” markalı neftin iyun fyuçerslərinin qiyməti 3,24% artaraq bir barel üçün 34,12 ABŞ dollarına çatıb.
+datasets/raw/0019.wav|İranda 1918-ci il təvəllüdlü xəstə yeni növ koronavirusdan tamamilə müalicə edilib.
+datasets/raw/0020.wav|Xınalıqdakı evlər demək olar ki, tamamilə yaxınlıqda tapılmış daşlardan tikilmiş quru daş divarlardan ibarətdir.
+datasets/raw/0021.wav|Onların hər biri əl işidir.
+datasets/raw/0022.wav|Qarlı aşırımlarda və meşələrdə zəifləmiş, taqətdən düşmüş insanların çox hissəsi Ermənistan silahlı qüvvələri tərəfindən burada da xüsusi qəddarlıqla məhv edilmişdi.
+datasets/raw/0023.wav|Bəzi ölkələrdə pul üçün antiseptik kağızdan istifadə edirlər.
+datasets/raw/0024.wav|Bundan başqa, ağıllı həyat yoldaşına sahib olmaq ağıl zəifləməsindən və Alzheimerdən qoruyur.
+datasets/raw/0025.wav|Onun hüquqi ünvanı Bakı şəhəri, Yasamal rayonu, Abbas Mirzə Şərifzadə küçəsi, ev 174, mənzil 62, nizamnamə kapitalı 100 manatdır.
+datasets/raw/0026.wav|"Report" "REN TV"yə istinadən xəbər verir ki, 76 yaşlı sənətçi hazırda kardiocərrahiyyə şöbəsində müayinədən keçirilir.
+datasets/raw/0027.wav|Belədə isə tam əksinə, dəridə yara izlərinin görünməsinə və həyatın sonuna qədər saç tökülməsinə səbəb ola bilər.
+datasets/raw/0028.wav|Bunların 357 180 nəfəri sağalıb, 95 813 nəfəri isə ölüb.
+datasets/raw/0029.wav|Mütəxəssislər sikkələri götürərək araşdırmalara başlayıblar.
+datasets/raw/0030.wav|Mütəxəssisin fikrincə, bir çox insan yeməkdən asılıdır və oyandıqdan sonra səhər aclığı xəyali bir şeydir.
+datasets/raw/0031.wav|Bundan başqa, rəisin ən təccüblə qarşılanan əməli bir neçə aztəminatlı şəxsə avtomobil hədiyyə etməsi olmuşdu.
+datasets/raw/0032.wav|O, əvvəlcə penaltini dəqiq yerinə yetirib, sonra isə "keltlər"in qapısına cərimə zərbələrindən iki dəfə qol vurub.
+datasets/raw/0033.wav|İstehsalçıların immunitet sisteminə müsbət təsir etdiyi və koronaya meydan oxuduğunu vurğuladığı motal pendirinə Türkiyənin dörd bir yanından tələb artıb.
+datasets/raw/0034.wav|Cinayət Məcəlləsinin müxtəlif maddələri axtarışda olduğuna görə 1 nəfər saxlanılıb.
+datasets/raw/0035.wav|Tədqiqatçılar kabinəni plastik butulkadan, yolu isə mühərrikli oyuncaq avtomobildən hazırladılar.
+datasets/raw/0036.wav|Nazirliyin son məlumatına görə, yoluxanlardan 50-nin vəziyyəti ağırdır.
+datasets/raw/0037.wav|Avropada koronavirusdan ölüm hallarının yarısı qocalar evində baş verib.
+datasets/raw/0038.wav|R.Əliyev havaların soyuması ilə əlaqədar olaraq istiliyin vaxtından tez verilib-verilməməsinə də münasibət bildirib:
+datasets/raw/0039.wav|Rusiya dopinq laboratoriyası məlumatlarını manipulyasiya etməsi ittihamlarına görə dörd illik qadağa ilə üzləşə bilər.
+datasets/raw/0040.wav|“İcra başçısı olaraq iş fəaliyyətimlə bağlı onu deyə bilərəm ki, bunu özünüz izləyəcəksiz.
+datasets/raw/0041.wav|ABŞ Prezidenti Donald Tramp İranın uranı zənginləşdirməsinə dair açıqlamalara münasibət bildirib.
+datasets/raw/0042.wav|(Diqqət! Əllər sulu olmalıdır ki, düyü ələ yapışmasın.
+datasets/raw/0043.wav|Problem ondadır ki, ermənilər tərəfindən bunu başqalarının üstünə atmaq cəhdləri var.
+datasets/raw/0044.wav|“Təəssüflər olsun ki, bu kimi məlumatlar vaxtaşırı məqsədyönlü surətdə informasiya məkanına sızdırılır və təxribat məqsədi güdür.
+datasets/raw/0045.wav|"Ümumi seçkilər noyabrın 3-də keçiriləcək", - ABŞ prezidenti bununla bağlı suala cavabında deyib.
+datasets/raw/0046.wav|Saymon anası üçün topladığı çiçəkləri kenqururya uzadır.
+datasets/raw/0047.wav|Həmin şəxslərin 42-si sağalıb.
+datasets/raw/0048.wav|AVRO-2020-nin açılış matçında İtaliya və Türkiyə milliləri Romadakı “Olimpiko” stadionunda qarşılaşacaqlar.
+datasets/raw/0049.wav|Türkiyə olaraq, UEFA-nın milli komandamıza və klublarımıza qarşı ayrı-seçkilik xarakteri daşıyan, haqsız və siyasi mövqeyini rədd edirik.
+datasets/raw/0050.wav|RİA “Novosti” xəbər verir ki, Rusiya prezidentinin mətbuat katibi Dmitri Peskov Türkiyə prezidentinin rusiyaya səfəri ilə bağlı konkret tarixin müəyyənləşdirilmədiyini açıqlayıb.
+datasets/raw/0051.wav|Rusiyalı alimlər koronavirus və piylənmə arasında əlaqəni müəyyən ediblər.
+datasets/raw/0052.wav|2004-cü ildə işə salınmış layihədə 50 mindən çox sağlam insan iştirak edib.
+datasets/raw/0053.wav|Tədbirdə çıxış edən Bakı Şəhər İcra Hakimiyyətinin başçısı Eldar Əzizov ölkə başçısının qəbulunda olduğu zaman Prezident tərəfindən verilən tapşırıqlar, qeyd edilmiş nöqsanlar, görüləcək işlər və qarşıya qoyulan vəzifələr barədə məlumat verib.
+datasets/raw/0054.wav|Əllə çəkdiyi  şəkillərini divara asmış və hər dəfə öz qonaqları gələndə onlara göstərərdi.
+datasets/raw/0055.wav|Deyə bilərəm ki, hazırda əhaliyə verilən su bütün standartlara cavab verir.
+datasets/raw/0056.wav|Həmin gün “Motorolla” şirkəti layihəsinə 100 milyon dollar xərclənən bir aparatı təqdim etdi.
+datasets/raw/0057.wav|"Bir daha vətəndaşlarımıza tövsiyə edirik ki, xüsusi karantin rejimi qaydalarına əməl etsinlər.
+datasets/raw/0058.wav|Əgər, otaq isti olarsa, daha tez-tez havaya çıxarmaq vacibdir.
+datasets/raw/0059.wav|Hüseynov son beş ildə metroda asayişin qorunması işlərinə rəhbərlik edib.
+datasets/raw/0060.wav|“Bu il “Türk Axını”nın istismara başlanması nəzərdə tutulur.
+datasets/raw/0061.wav|Bu şirkətlərin kəşfiyyat aparacağı yataqlarda qaz həcminin 750 milyard kub metr təşkil etdiyi bildirilib.
+datasets/raw/0062.wav|2019-cu ilin noyabr ayının 1-də Siqulda şəhərində Latviya hakimlərinin Konqresi keçirildi.
+datasets/raw/0063.wav|Oyun avtomobilin bort kompüterlərində mövcud olacaq və şounu artıq elektrikli avtomobilin onlayn kinoteatr tətbiqetməsində görmək olar.
+datasets/raw/0064.wav|Alimlər iddia edirlər ki, yüksək səmərəliliyi olan radioaktiv tullantıların indi istifadə olunmamış yığılmış ehtiyatları universal birləşməyə çevrilə bilər.
+datasets/raw/0065.wav|Çinin Uhan şəhərində yaşayan Kanada vətəndaşı 21 yaşlı Kristina Şramko ölümcül virus təhlükəsinə baxmayaraq, vətəninə qayıtmaqdan imtina edib.
+datasets/raw/0066.wav|“Volkswagen Bakı” alıcılarına qüsurlu maşın satdığına görə, onların ciddi narazılığı ilə üzləşib.
+datasets/raw/0067.wav|Bundan əlavə, kataloniyalıların rəhbərliyi funksioneri məhkəməyə verə biləcəyinə işarə edib.
+datasets/raw/0068.wav|Müraciət edən şəxslərə psixoloji dəstək göstərilib, onlara tövsiyələr verilib.
+datasets/raw/0069.wav|Azərbaycan Respublikası Nazirlər Kabinetinin 2015-ci il 20 oktyabr tarixli qərarı ilə təsdiq edilmiş “Azərbaycan Ordusu və Azərbaycan Respublikasının qanunvericiliyinə uyğun olaraq yaradılmış başqa silahlı birləşmələr üçün vətəndaşların xüsusi hərbi ixtisaslar üzrə hazırlığının təşkil edilməsi və keçirilməsi Qaydası”nın 3.
+datasets/raw/0070.wav|Çiy kartof lif baxımından zəngindir.
+datasets/raw/0071.wav|Ona görə bütün planlar qısa, yaxın hədəflərə hesablanmış və düşmənə ağır hərbi-siyasi nəticələr verəcək olmalıdır.
+datasets/raw/0072.wav|Qeyd edilib ki, Respublika Müalicəvi Diaqnostika Mərkəzi ilə əlaqə saxlanılıb və belə bir şəxsin orada çalışmadığı bildirilib.
+datasets/raw/0073.wav|Millət vəkili bildirib ki, Prezident İlham Əliyevin nitqində koronavirusa qarşı milli səviyyədə atılan addımlar göstərildi.
+datasets/raw/0074.wav|Sərkisyanın rəhbərlik etdiyi Respublikaçılar partiyası tərəfindən narazılıqla qarşılanıb.
+datasets/raw/0075.wav|"Report" "El Chiringuito"ya istinadən xəbər verir ki, həmin oyunçunun adı açıqlanmayıb.
+datasets/raw/0076.wav|Samir Əliyev əlavə edib ki, əgər bu gün Manat “üzən” məzənnə rejimində olarsa onun bahalaşması tədiyyə balansının müsbət saldoya malik olmasından qaynaqlanacaqdır.
+datasets/raw/0077.wav|Paltolarda trikotajlara üstünlük veriləcək.
+datasets/raw/0078.wav|O, Böyük Britaniyada karantinə alınmış şəxslərlə bağlı hesabatdan sonra bu qənaətə gəlib.
+datasets/raw/0079.wav|Ada sakini bildirib ki, o, canlıya toxunanda əli uyuşub.
+datasets/raw/0080.wav|15 dəqiqə ərzində ağrılar sovrulacaq.
+datasets/raw/0081.wav|"COVİD 19" pasportu ilə bağlı müzakirələr aparıldıqdan sonra ictimaiyyətə geniş məlumat veriləcək".
+datasets/raw/0082.wav|Hələlik Baş Narkotiklərlə Mübarizə İdarəsinin rəisi və şöbə rəisi vəzifələrinə təyinat olmayıb.
+datasets/raw/0083.wav|“ABŞ Suriyadakı neft yataqlarını talamaqla məşğuldur, bu Amerika siyasətində görünməmiş nümunədir”.
+datasets/raw/0084.wav|Bütün dünyanın tarixini dəyişdirəcəyik”, - Rajoelina bildirib.
+datasets/raw/0085.wav|Generalların vəzifədən uzaqlaşdırılmasının səbəbləri açıqlanmır.
+datasets/raw/0086.wav|Məlumata görə, ölkə müxalifətinin Rusiya ilə imzalanan müqavilənin ləğvi və ya şərtlərinin dəyişdirilməsi ilə bağlı müraciəti Konstitusiya Məhkəməsi tərəfindən dəstəklənib.
+datasets/raw/0087.wav|Bu, “Qara cümə” analoqu olan ilk müsəlman kampaniyası deyil.
+datasets/raw/0088.wav|Yeri gəlmişkən, ABŞ Prezidentinin sözləri Ağ Evin saytında da yer alıb.
+datasets/raw/0089.wav|TAP-TANAP layihələri dünyanın enerji xəritəsini dəyişərək inkişafa böyük tövhə verəcək.
+datasets/raw/0090.wav|Xatırladaq ki, koronavirus infeksiyası ötən ilin dekabrında Çinin Uhan şəhərində yayılmağa başlayıb.
+datasets/raw/0091.wav|Ötən müddət ərzində yeni yoluxma hallarının müəyyənləşdirilməsi ilə əlaqədar 120 479 test aparılıb.
+datasets/raw/0092.wav|“Azərbaycan əvvəlki mövqeyindən imtina etmir.
+datasets/raw/0093.wav|Türkiyənin Çorum şəhərində keçirilən 16 yaşadək şahmatçılar arasında Dünya Şahmat Olimpiadası başa çatdı.
+datasets/raw/0094.wav|Qeyd edək ki, koronavirus infeksiyasının iqtisadiyyatın müxtəlif sektorlarına təsirlərinin öyrənilməsi məqsədilə keçirilmiş onlayn müzakirələrə ümumilikdə, 200-dən çox sahibkarlıq subyekti qoşulub, 700-dən çox sahibkar arasında sorğular aparılıb.
+datasets/raw/0095.wav|“Report” xəbər verir ki, bu barədə federal və yerli hakimiyyətin məlumatları əsasında hesablamalar aparan Con Hopkins Universiteti məlumat yayıb.
+datasets/raw/0096.wav|Danılmaz həqiqətdir ki, hər bir dövlət başçısı dünya miqyasında bu qüdrəti nümayiş etdirmir.
+datasets/raw/0097.wav|Bununla belə, qiymət artımı gözlənilmir", - deyə o qeyd edib.
+datasets/raw/0098.wav|Bununla belə, keçəllik qadınları da təqib edə bilər.
+datasets/raw/0099.wav|Gələn il Tokioda keçiriləcək Yay Olimpiya Oyunlarına lisenziya xalları verən beynəlxalq turnirdə ölkəmizi 5 qadın cüdoçu təmsil edib.

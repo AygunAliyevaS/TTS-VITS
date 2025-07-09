@@ -1,23 +1,95 @@
-datasets/raw/02.wav|İlham, ağıl, istedad o yerdə dəyərlidir ki, dəyəri verdir. 
-datasets/raw/03.wav|O yerdə qiymətlidir ki, onu əziz tuturlar, ona ehtiyac duyurlar.
-datasets/raw/04.wav|O yerdə ki, istedadın başından basırlar. 
-datasets/raw/05.wav|O yerdə ki, parlaq kimsələri küncə dirilirlər. 
-datasets/raw/06.wav|O yerdə ki, onlardan qat-qat əski yolanları onlardan uca tuturlar.
-datasets/raw/07.wav|O yerdə ki, qarğa qızğınlar o parlaqların üstünə tökülür. 
-datasets/raw/08.wav|Dünya başlarına dar olmasın, ne eləsin. 
-datasets/raw/09.wav|Və bu acı qismət Seyyidəzim Şirvaninin öz talihinlə də keçmişdir.
-datasets/raw/10.wav|Və həmin ağrıları yaşadığındandır ki, məktəblər üçün, uşaqlar üçün yazdığı 
-datasets/raw/11.wav|Rəbiyəl Ətfal kitabına bir hekayətdə daxil eləmişdir. 
-datasets/raw/12.wav|Böyük mütəfəkkir, məşhur sufi şairi şeyh Feridəddin Əddar Çingizxanın istilaları zamanı əsir düşür. 
-datasets/raw/13.wav|Bir moğol onu qətlə getirmək istəyir.
-datasets/raw/14.wav|Bu arada bir başqa moğol qabağa çıxır, deyir, onu öldürmə, sat mənə, min qızıl verirəm sənə.  
-datasets/raw/15.wav|Feridəddin Əddar hiss edir ki, bu qətlə getirmək istəyən, deyəsən, razılaşan kimidir. 
-datasets/raw/16.wav|İllənir ki, tələsmə, satmə məni, mənim qiymətim daha baxadır.
-datasets/raw/17.wav|O qətlə getirmək istəyən qərarı alır ki, gözləsin. 
-datasets/raw/18.wav|Bir az keçir, bir başqa moğol yaxınlaşır ona, deyir ki, bunu satmaq istəyirsən, sən sat mənə. 
-datasets/raw/19.wav|Bir torba saman verirəm sənə, fikirə dalır Feridəddin Əddar.
-datasets/raw/20.wav|Deyir, hə, indi sata bilərsən, elə mənim qiymətim bu qədərmiş. 
-datasets/raw/21.wav|Seydəzimin talih kitabı əvvəldən əyr-öylü yazıldı. 
-datasets/raw/22.wav|Qlav kiçikliyindən Tanrı ona istedad, fərasət, qaviliyyət bağışladı.
-datasets/raw/23.wav|Qlav kiçikliyindən Tanrı ona istedad, fərasət, qaviliyyət bağışladı.
-datasets/raw/24.wav|Amma uşaqlıq illərindən başlayaraq ta ömürdən sonuna can, ağrılar, acılar, niskillər də daim onu müşahid etdi. 
+datasets/normalized/0063.wav|Oyun avtomobilin bort kompüterlərində mövcud olacaq və şounu artıq elektrikli avtomobilin onlayn kinoteatr tətbiqetməsində görmək olar.
+datasets/normalized/0052.wav|2004-cü ildə işə salınmış layihədə 50 mindən çox sağlam insan iştirak edib.
+datasets/normalized/0060.wav|“Bu il “Türk Axını”nın istismara başlanması nəzərdə tutulur.
+datasets/normalized/0008.wav|Bakı Ağır Cinayətlər Məhkəməsində rüşvət almaqda ittiham edilən Namiq Əsədovun cinayət işi üzrə məhkəmə prosesi keçirilib.
+datasets/normalized/0089.wav|TAP-TANAP layihələri dünyanın enerji xəritəsini dəyişərək inkişafa böyük tövhə verəcək.
+datasets/normalized/0004.wav|Daha əvvəl Cənubi Afrika Prezidenti Siril Ramafosa bütün ölkə ərazisində 21 günlük karantinin tətbiq olunduğunu açıqlayıb.
+datasets/normalized/0099.wav|Gələn il Tokioda keçiriləcək Yay Olimpiya Oyunlarına lisenziya xalları verən beynəlxalq turnirdə ölkəmizi 5 qadın cüdoçu təmsil edib.
+datasets/normalized/0081.wav|"COVİD 19" pasportu ilə bağlı müzakirələr aparıldıqdan sonra ictimaiyyətə geniş məlumat veriləcək".
+datasets/normalized/0061.wav|Bu şirkətlərin kəşfiyyat aparacağı yataqlarda qaz həcminin 750 milyard kub metr təşkil etdiyi bildirilib.
+datasets/normalized/0037.wav|Avropada koronavirusdan ölüm hallarının yarısı qocalar evində baş verib.
+datasets/normalized/0035.wav|Tədqiqatçılar kabinəni plastik butulkadan, yolu isə mühərrikli oyuncaq avtomobildən hazırladılar.
+datasets/normalized/0034.wav|Cinayət Məcəlləsinin müxtəlif maddələri axtarışda olduğuna görə 1 nəfər saxlanılıb.
+datasets/normalized/0007.wav|Həmçinin, 1 milyondan çox azərbaycanlı qaçqın və məcburi köçkünün öz evinə dönməsinə imkan vermir.
+datasets/normalized/0044.wav|“Təəssüflər olsun ki, bu kimi məlumatlar vaxtaşırı məqsədyönlü surətdə informasiya məkanına sızdırılır və təxribat məqsədi güdür.
+datasets/normalized/0055.wav|Deyə bilərəm ki, hazırda əhaliyə verilən su bütün standartlara cavab verir.
+datasets/normalized/0026.wav|"Report" "REN TV"yə istinadən xəbər verir ki, 76 yaşlı sənətçi hazırda kardiocərrahiyyə şöbəsində müayinədən keçirilir.
+datasets/normalized/0041.wav|ABŞ Prezidenti Donald Tramp İranın uranı zənginləşdirməsinə dair açıqlamalara münasibət bildirib.
+datasets/normalized/0075.wav|"Report" "El Chiringuito"ya istinadən xəbər verir ki, həmin oyunçunun adı açıqlanmayıb.
+datasets/normalized/0001.wav|Bu baxımdan Gəncəyə digər şəhər və rayonlardan gələn vətəndaşlara məhdudiyyətlər yaranıb.
+datasets/normalized/0045.wav|"Ümumi seçkilər noyabrın 3-də keçiriləcək", - ABŞ prezidenti bununla bağlı suala cavabında deyib.
+datasets/normalized/0084.wav|Bütün dünyanın tarixini dəyişdirəcəyik”, - Rajoelina bildirib.
+datasets/normalized/0016.wav|Gürcüstanın “Mtavari Arxi” televiziya şirkətinin jurnalisti Georgi Qabuniya erməniləri təhqir edib.
+datasets/normalized/0073.wav|Millət vəkili bildirib ki, Prezident İlham Əliyevin nitqində koronavirusa qarşı milli səviyyədə atılan addımlar göstərildi.
+datasets/normalized/0015.wav|Əlbəttə ki, tableti yalnız təmiz suya əlavə etmək lazımdır, hansı ki, onu tez-tez dəyişdirmək lazımdır.
+datasets/normalized/0030.wav|Mütəxəssisin fikrincə, bir çox insan yeməkdən asılıdır və oyandıqdan sonra səhər aclığı xəyali bir şeydir.
+datasets/normalized/0039.wav|Rusiya dopinq laboratoriyası məlumatlarını manipulyasiya etməsi ittihamlarına görə dörd illik qadağa ilə üzləşə bilər.
+datasets/normalized/0065.wav|Çinin Uhan şəhərində yaşayan Kanada vətəndaşı 21 yaşlı Kristina Şramko ölümcül virus təhlükəsinə baxmayaraq, vətəninə qayıtmaqdan imtina edib.
+datasets/normalized/0079.wav|Ada sakini bildirib ki, o, canlıya toxunanda əli uyuşub.
+datasets/normalized/0025.wav|Onun hüquqi ünvanı Bakı şəhəri, Yasamal rayonu, Abbas Mirzə Şərifzadə küçəsi, ev 174, mənzil 62, nizamnamə kapitalı 100 manatdır.
+datasets/normalized/0050.wav|RİA “Novosti” xəbər verir ki, Rusiya prezidentinin mətbuat katibi Dmitri Peskov Türkiyə prezidentinin rusiyaya səfəri ilə bağlı konkret tarixin müəyyənləşdirilmədiyini açıqlayıb.
+datasets/normalized/0097.wav|Bununla belə, qiymət artımı gözlənilmir", - deyə o qeyd edib.
+datasets/normalized/0006.wav|az xəbər verir ki, Təhsil Nazirliyi koronavirus təhlükəsi ilə əlaqədar ümumi təhsil müəssisələrində tibb otaqlarının zəruri tibbi ləvazimatlarla təchiz olunmasına nəzarətin artırılmasıni tapşırıb.
+datasets/normalized/0083.wav|“ABŞ Suriyadakı neft yataqlarını talamaqla məşğuldur, bu Amerika siyasətində görünməmiş nümunədir”.
+datasets/normalized/0005.wav|az xəbər verir ki, əgər oktyabrın 29-da iş adamının sərvəti “Bloomberg Billionaires İndex”də 20,1 milyard dollar idisə, hazırda bu məbləğ 20,9 milyard dollar təşkil edir.
+datasets/normalized/0070.wav|Çiy kartof lif baxımından zəngindir.
+datasets/normalized/0023.wav|Bəzi ölkələrdə pul üçün antiseptik kağızdan istifadə edirlər.
+datasets/normalized/0082.wav|Hələlik Baş Narkotiklərlə Mübarizə İdarəsinin rəisi və şöbə rəisi vəzifələrinə təyinat olmayıb.
+datasets/normalized/0062.wav|2019-cu ilin noyabr ayının 1-də Siqulda şəhərində Latviya hakimlərinin Konqresi keçirildi.
+datasets/normalized/0020.wav|Xınalıqdakı evlər demək olar ki, tamamilə yaxınlıqda tapılmış daşlardan tikilmiş quru daş divarlardan ibarətdir.
+datasets/normalized/0098.wav|Bununla belə, keçəllik qadınları da təqib edə bilər.
+datasets/normalized/0066.wav|“Volkswagen Bakı” alıcılarına qüsurlu maşın satdığına görə, onların ciddi narazılığı ilə üzləşib.
+datasets/normalized/0014.wav|Beləliklə, alimlər səhər sağ ayaqdan qalxmağı tövsiyə edirlər.
+datasets/normalized/0080.wav|15 dəqiqə ərzində ağrılar sovrulacaq.
+datasets/normalized/0043.wav|Problem ondadır ki, ermənilər tərəfindən bunu başqalarının üstünə atmaq cəhdləri var.
+datasets/normalized/0036.wav|Nazirliyin son məlumatına görə, yoluxanlardan 50-nin vəziyyəti ağırdır.
+datasets/normalized/0085.wav|Generalların vəzifədən uzaqlaşdırılmasının səbəbləri açıqlanmır.
+datasets/normalized/0031.wav|Bundan başqa, rəisin ən təccüblə qarşılanan əməli bir neçə aztəminatlı şəxsə avtomobil hədiyyə etməsi olmuşdu.
+datasets/normalized/0053.wav|Tədbirdə çıxış edən Bakı Şəhər İcra Hakimiyyətinin başçısı Eldar Əzizov ölkə başçısının qəbulunda olduğu zaman Prezident tərəfindən verilən tapşırıqlar, qeyd edilmiş nöqsanlar, görüləcək işlər və qarşıya qoyulan vəzifələr barədə məlumat verib.
+datasets/normalized/0013.wav|Məktəbəqədər hazırlıq keçməyən uşaqların qeyri dildə tədrisə qəbul edilməsi həmin dildəki nitq qabiliyyətinin yoxlandığı müsahibənin nəticələrinə görə aparılır.
+datasets/normalized/0032.wav|O, əvvəlcə penaltini dəqiq yerinə yetirib, sonra isə "keltlər"in qapısına cərimə zərbələrindən iki dəfə qol vurub.
+datasets/normalized/0051.wav|Rusiyalı alimlər koronavirus və piylənmə arasında əlaqəni müəyyən ediblər.
+datasets/normalized/0078.wav|O, Böyük Britaniyada karantinə alınmış şəxslərlə bağlı hesabatdan sonra bu qənaətə gəlib.
+datasets/normalized/0087.wav|Bu, “Qara cümə” analoqu olan ilk müsəlman kampaniyası deyil.
+datasets/normalized/0064.wav|Alimlər iddia edirlər ki, yüksək səmərəliliyi olan radioaktiv tullantıların indi istifadə olunmamış yığılmış ehtiyatları universal birləşməyə çevrilə bilər.
+datasets/normalized/0077.wav|Paltolarda trikotajlara üstünlük veriləcək.
+datasets/normalized/0094.wav|Qeyd edək ki, koronavirus infeksiyasının iqtisadiyyatın müxtəlif sektorlarına təsirlərinin öyrənilməsi məqsədilə keçirilmiş onlayn müzakirələrə ümumilikdə, 200-dən çox sahibkarlıq subyekti qoşulub, 700-dən çox sahibkar arasında sorğular aparılıb.
+datasets/normalized/0095.wav|“Report” xəbər verir ki, bu barədə federal və yerli hakimiyyətin məlumatları əsasında hesablamalar aparan Con Hopkins Universiteti məlumat yayıb.
+datasets/normalized/0009.wav|“Heç bir virusun laboratoriyamızı tərk edə bilməməsi üçün bir sıra tədbirlər görmüşük”, - deyə, Uhan Dövlət Biomühafizə Laboratoriyasının direktoru Yuan Cjimin bildirib.
+datasets/normalized/0090.wav|Xatırladaq ki, koronavirus infeksiyası ötən ilin dekabrında Çinin Uhan şəhərində yayılmağa başlayıb.
+datasets/normalized/0068.wav|Müraciət edən şəxslərə psixoloji dəstək göstərilib, onlara tövsiyələr verilib.
+datasets/normalized/0057.wav|"Bir daha vətəndaşlarımıza tövsiyə edirik ki, xüsusi karantin rejimi qaydalarına əməl etsinlər.
+datasets/normalized/0042.wav|(Diqqət! Əllər sulu olmalıdır ki, düyü ələ yapışmasın.
+datasets/normalized/0019.wav|İranda 1918-ci il təvəllüdlü xəstə yeni növ koronavirusdan tamamilə müalicə edilib.
+datasets/normalized/0027.wav|Belədə isə tam əksinə, dəridə yara izlərinin görünməsinə və həyatın sonuna qədər saç tökülməsinə səbəb ola bilər.
+datasets/normalized/0000.wav|Məsələ bundadır ki, KXDR-in mal dövriyyəsinin 90% -i Çin üzərindən, bu ölkənin Şimali Koreya sərhədinə yaxın yerləşən Dandun və Şenyanq bölgələrində xəstəlik halları qeydə alınmışdı.
+datasets/normalized/0021.wav|Onların hər biri əl işidir.
+datasets/normalized/0058.wav|Əgər, otaq isti olarsa, daha tez-tez havaya çıxarmaq vacibdir.
+datasets/normalized/0024.wav|Bundan başqa, ağıllı həyat yoldaşına sahib olmaq ağıl zəifləməsindən və Alzheimerdən qoruyur.
+datasets/normalized/0074.wav|Sərkisyanın rəhbərlik etdiyi Respublikaçılar partiyası tərəfindən narazılıqla qarşılanıb.
+datasets/normalized/0069.wav|Azərbaycan Respublikası Nazirlər Kabinetinin 2015-ci il 20 oktyabr tarixli qərarı ilə təsdiq edilmiş “Azərbaycan Ordusu və Azərbaycan Respublikasının qanunvericiliyinə uyğun olaraq yaradılmış başqa silahlı birləşmələr üçün vətəndaşların xüsusi hərbi ixtisaslar üzrə hazırlığının təşkil edilməsi və keçirilməsi Qaydası”nın 3.
+datasets/normalized/0018.wav|Belə ki, Bakı vaxtı ilə saat 05:48-ə olan duruma görə, “Brent” markalı neftin iyun fyuçerslərinin qiyməti 3,24% artaraq bir barel üçün 34,12 ABŞ dollarına çatıb.
+datasets/normalized/0040.wav|“İcra başçısı olaraq iş fəaliyyətimlə bağlı onu deyə bilərəm ki, bunu özünüz izləyəcəksiz.
+datasets/normalized/0088.wav|Yeri gəlmişkən, ABŞ Prezidentinin sözləri Ağ Evin saytında da yer alıb.
+datasets/normalized/0003.wav|Bəzi hallarda tarixi binaları sökürlər, onların yerində eybəcər hündürmərtəbəli binalar tikirlər.
+datasets/normalized/0054.wav|Əllə çəkdiyi  şəkillərini divara asmış və hər dəfə öz qonaqları gələndə onlara göstərərdi.
+datasets/normalized/0029.wav|Mütəxəssislər sikkələri götürərək araşdırmalara başlayıblar.
+datasets/normalized/0091.wav|Ötən müddət ərzində yeni yoluxma hallarının müəyyənləşdirilməsi ilə əlaqədar 120 479 test aparılıb.
+datasets/normalized/0093.wav|Türkiyənin Çorum şəhərində keçirilən 16 yaşadək şahmatçılar arasında Dünya Şahmat Olimpiadası başa çatdı.
+datasets/normalized/0038.wav|R.Əliyev havaların soyuması ilə əlaqədar olaraq istiliyin vaxtından tez verilib-verilməməsinə də münasibət bildirib:
+datasets/normalized/0092.wav|“Azərbaycan əvvəlki mövqeyindən imtina etmir.
+datasets/normalized/0067.wav|Bundan əlavə, kataloniyalıların rəhbərliyi funksioneri məhkəməyə verə biləcəyinə işarə edib.
+datasets/normalized/0002.wav|Suya bir neçə tablet aspirin və ya aktivləşdirilmiş kömür qoymaq lazımdır.
+datasets/normalized/0022.wav|Qarlı aşırımlarda və meşələrdə zəifləmiş, taqətdən düşmüş insanların çox hissəsi Ermənistan silahlı qüvvələri tərəfindən burada da xüsusi qəddarlıqla məhv edilmişdi.
+datasets/normalized/0049.wav|Türkiyə olaraq, UEFA-nın milli komandamıza və klublarımıza qarşı ayrı-seçkilik xarakteri daşıyan, haqsız və siyasi mövqeyini rədd edirik.
+datasets/normalized/0010.wav|Tramp əslində nə yazmaq istədiyini isə hələ də açıqlamayıb.
+datasets/normalized/0033.wav|İstehsalçıların immunitet sisteminə müsbət təsir etdiyi və koronaya meydan oxuduğunu vurğuladığı motal pendirinə Türkiyənin dörd bir yanından tələb artıb.
+datasets/normalized/0076.wav|Samir Əliyev əlavə edib ki, əgər bu gün Manat “üzən” məzənnə rejimində olarsa onun bahalaşması tədiyyə balansının müsbət saldoya malik olmasından qaynaqlanacaqdır.
+datasets/normalized/0072.wav|Qeyd edilib ki, Respublika Müalicəvi Diaqnostika Mərkəzi ilə əlaqə saxlanılıb və belə bir şəxsin orada çalışmadığı bildirilib.
+datasets/normalized/0048.wav|AVRO-2020-nin açılış matçında İtaliya və Türkiyə milliləri Romadakı “Olimpiko” stadionunda qarşılaşacaqlar.
+datasets/normalized/0086.wav|Məlumata görə, ölkə müxalifətinin Rusiya ilə imzalanan müqavilənin ləğvi və ya şərtlərinin dəyişdirilməsi ilə bağlı müraciəti Konstitusiya Məhkəməsi tərəfindən dəstəklənib.
+datasets/normalized/0071.wav|Ona görə bütün planlar qısa, yaxın hədəflərə hesablanmış və düşmənə ağır hərbi-siyasi nəticələr verəcək olmalıdır.
+datasets/normalized/0047.wav|Həmin şəxslərin 42-si sağalıb.
+datasets/normalized/0056.wav|Həmin gün “Motorolla” şirkəti layihəsinə 100 milyon dollar xərclənən bir aparatı təqdim etdi.
+datasets/normalized/0059.wav|Hüseynov son beş ildə metroda asayişin qorunması işlərinə rəhbərlik edib.
+datasets/normalized/0012.wav|Əlbəttə ki, söhbət nəqliyyat vasitəsinin özündən getmir, onun "ölmüş" akkumlyatorunun elektrik enerjisi ilə qidalandırmaqdan gedir.

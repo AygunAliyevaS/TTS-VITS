@@ -12,36 +12,36 @@ import argparse
 from pathlib import Path
 import random
 import logging
-import csv
-from typing import Dict, List, Optional, Tuple
+from typing import Dict
 
 # Set up logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
 def load_transcriptions(trans_file: Path) -> Dict[str, str]:
-    """Load transcriptions from a CSV file.
+    """Load transcriptions from a `path|text` file.
     
-    Args:
-        trans_file: Path to CSV file with filename,transcription format
-        
-    Returns:
-        Dictionary mapping filenames to transcriptions
+    This helper is tolerant of unescaped double-quotes or additional pipe
+    characters inside the sentence – it only splits on the *first* pipe.
     """
-    transcriptions = {}
-    
+    transcriptions: Dict[str, str] = {}
+
     if not trans_file.exists():
         logger.warning(f"Transcription file {trans_file} not found. Using dummy text.")
         return transcriptions
-    
+
     with open(trans_file, 'r', encoding='utf-8') as f:
-        reader = csv.reader(f)
-        for row in reader:
-            if len(row) >= 2:
-                # Use filename without extension as key
-                filename = Path(row[0]).stem
-                transcriptions[filename] = row[1]
-    
+        for raw_line in f:
+            line = raw_line.rstrip('\n')
+            if not line:
+                continue  # skip empty lines
+            if '|' not in line:
+                logger.warning("Skipping line without '|': %s", line[:60])
+                continue
+            path_str, text = line.split('|', 1)  # split only on the *first* pipe
+            filename = Path(path_str.strip()).stem  # stem -> key like '0003'
+            transcriptions[filename] = text.strip()
+
     logger.info(f"Loaded {len(transcriptions)} transcriptions from {trans_file}")
     return transcriptions
 
