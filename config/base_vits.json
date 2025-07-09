@@ -1,12 +1,12 @@
 {
   "train": {
-    "batch_size": 16,
+    "batch_size": 4,
     "learning_rate": 2e-4,
     "max_epochs": 1000,
     "checkpoint_interval": 5,
     "log_interval": 50,
     "grad_accum_steps": 1,
-    "num_workers": 4,
+    "num_workers": 2,
     "recon_weight": 1.0,
     "kl_weight": 0.1,
     "dur_weight": 0.1,
@@ -25,13 +25,13 @@
     "upsample_kernel_sizes": [16, 16, 4, 4]
   },
   "data": {
-    "training_files": "filelists/train.txt",
-    "validation_files": "filelists/val.txt",
+    "training_files": "data/filelists/train.txt",
+    "validation_files": "data/filelists/val.txt",
     "sampling_rate": 22050,
     "filter_length": 1024,
     "hop_length": 256,
     "win_length": 1024,
-    "max_audio_length": 8.0,
+    "max_audio_length": null,
     "min_audio_length": 1.0,
     "use_phonemes": false,
     "lowercase": true

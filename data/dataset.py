@@ -51,9 +51,26 @@ class VITSDataset(Dataset):
         self.items = self._parse_filelist(filelist_path)
         logger.info(f"Loaded {len(self.items)} items from {filelist_path}")
         
-        # Set max/min audio length based on whether this is training or validation
-        self.max_audio_length = float('inf') if is_validation else config.get('max_audio_length', 8.0)
-        self.min_audio_length = 0.0 if is_validation else config.get('min_audio_length', 1.0)
+        # Length constraints – training can optionally restrict to a
+        # configurable window of seconds.  The values may live either at the
+        # top level of the JSON (legacy) or under the "data" subsection (new
+        # configs).  A value of null/None disables that particular limit.
+
+        cfg_lengths = config.get('data', {}) if isinstance(config.get('data'), dict) else {}
+
+        def _get(key, default):
+            # Look under data[key] first, then fall back to top-level.
+            return cfg_lengths.get(key, config.get(key, default))
+
+        if is_validation:
+            self.max_audio_length = float('inf')
+            self.min_audio_length = 0.0
+        else:
+            max_len = _get('max_audio_length', float('inf'))
+            self.max_audio_length = float('inf') if max_len in (None, 'null') else max_len
+
+            min_len = _get('min_audio_length', 0.0)
+            self.min_audio_length = 0.0 if min_len in (None, 'null') else min_len
         
     def _parse_filelist(self, filelist_path: str) -> List[Dict]:
         """Parse filelist containing audio-text pairs."""
@@ -71,7 +88,19 @@ class VITSDataset(Dataset):
                 
                 # Handle relative paths
                 if not os.path.isabs(audio_path):
-                    audio_path = os.path.join(base_dir, audio_path)
+                    # First try relative to the file-list directory (historical behaviour)
+                    candidate_path = os.path.join(base_dir, audio_path)
+
+                    # If that file does not exist, fall back to interpreting the path
+                    # as relative to the current working directory/project root. This
+                    # is convenient when filelists are stored in a sub-folder but the
+                    # paths they contain are written relative to the repository root,
+                    # e.g. "datasets/raw/filename.wav". (Colab & many training scripts
+                    # generate such lists.)
+                    if os.path.exists(candidate_path):
+                        audio_path = candidate_path
+                    else:
+                        audio_path = os.path.abspath(audio_path)
                 
                 # Check if file exists
                 if not os.path.exists(audio_path):

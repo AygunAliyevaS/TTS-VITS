@@ -1,25 +1,36 @@
-# Core dependencies
-torch>=2.0.1
-torchaudio>=2.0.1
-numpy>=1.23.5
-matplotlib>=3.7.1
+############################################################
+# Locked dependency versions (Python 3.11, CUDA 11.8)
+# NOTE: the `+cu118` build tags for torch/torchaudio require
+#       installing with the extra-index url
+#       https://download.pytorch.org/whl/cu118
+############################################################
+
+# Core
+torch==2.3.1+cu118
+torchaudio==2.3.1+cu118
+numpy==1.26.4
+matplotlib==3.8.4
 
 # Audio processing
-librosa>=0.10.0
-scipy>=1.10.1
-soundfile>=0.12.1
-webrtcvad>=2.0.10  # optional, required only for VAD functionality
+librosa==0.10.2
+scipy==1.11.4
+soundfile==0.12.1
+webrtcvad==2.0.10          # optional, VAD functionality
 
-# Text processing
-pyyaml>=6.0
+# Text / config processing
+pyyaml==6.0.1
 
-# User interface
-gradio>=3.34.0
+# Data handling
+datasets==2.19.0
+pyarrow==15.0.2             # required by datasets
 
-# Training and utilities
-tqdm>=4.65.0
-tensorboard>=2.12.0
-einops>=0.6.1
+# UI / serving
+gradio==3.49.0
 
-# Optional: speech preprocessing
-speechbrain>=0.5.14  # optional, required only for speaker embeddings
+# Training utilities
+tqdm==4.66.4
+tensorboard==2.15.2
+einops==0.7.0
+
+# Optional: speech preprocessing / speaker embeddings
+speechbrain==0.5.16

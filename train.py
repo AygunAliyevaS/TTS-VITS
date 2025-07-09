@@ -114,14 +114,32 @@ def main():
     
     # Initialize data loaders
     logger.info("Initializing data loaders")
+    # Avoid creating an empty DataLoader when the dataset has fewer items than the batch
+    batch_size = config['train']['batch_size']
+    drop_last = True if len(train_dataset) >= batch_size else False
+
+    # If the dataset is very small (<= workers), PyTorch may emit 'Bad file
+    # descriptor' or 'semaphore released too many times' errors coming from the
+    # internal QueueFeederThread.  Mitigate by clamping the number of workers
+    # to at most len(dataset) - 1 (and never below 0).
+
+    requested_workers = config['train'].get('num_workers', 4)
+    # Workers for the training set (at least 0, at most len(dataset)-1)
+    num_workers_train = max(0, min(requested_workers, max(len(train_dataset) - 1, 0)))
+    # Workers for the validation set (handle None / tiny val set separately)
+    if val_dataset is not None:
+        num_workers_val = max(0, min(requested_workers, max(len(val_dataset) - 1, 0)))
+    else:
+        num_workers_val = 0
+
     train_loader = DataLoader(
         train_dataset,
-        batch_size=config['train']['batch_size'],
+        batch_size=batch_size,
         shuffle=True,
-        num_workers=config['train'].get('num_workers', 4),
+        num_workers=num_workers_train,
         collate_fn=VITSDataset.collate_fn,
         pin_memory=True,
-        drop_last=True
+        drop_last=drop_last
     )
     
     val_loader = None
@@ -130,7 +148,7 @@ def main():
             val_dataset,
             batch_size=config['train'].get('val_batch_size', 16),
             shuffle=False,
-            num_workers=config['train'].get('num_workers', 4),
+            num_workers=num_workers_val,
             collate_fn=VITSDataset.collate_fn,
             pin_memory=True
         )

@@ -18,30 +18,39 @@ A high-quality neural text-to-speech (TTS) system for the Azerbaijani language b
 
 ### Google Colab (Recommended)
 
-The easiest way to get started is using Google Colab with free GPU resources:
+The fastest way to try the model is the ready-made Colab notebook that walks
+through data preparation, training and inference on a free GPU instance:
 
-1. Open our [Colab Notebook](https://colab.research.google.com) and upload `notebooks/VITS_Azerbaijani.ipynb`
-2. Enable GPU runtime: Runtime > Change runtime type > GPU
-3. Follow the step-by-step instructions in the notebook
+1. Open `notebooks/VITS_Azerbaijani.ipynb` in Colab (File ▸ Open
+   Notebook ▸ GitHub and paste the repo URL, or just drag-and-drop the file).
+2. Switch the runtime to *GPU* (`Runtime` ▸ `Change runtime type` ▸ *GPU*).
+3. Run the cells from top to bottom – they include the **exact shell commands**
+   used by this README.
 
 ### Local Installation
 
 To set up the project locally:
 
 ```bash
-# Clone the repository
-git clone https://github.com/your-username/tts-vits.git
+# 1) Clone the repository
+git clone https://github.com/tunjay-h/tts-vits.git
 cd tts-vits
 
-# Create a virtual environment (optional but recommended)
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+# 2) (Optional) create a virtualenv
+python -m venv .venv
+source .venv/bin/activate  # Windows: .venv\Scripts\activate
 
-# Install dependencies
+# 3) Install the Python stack
+#    ⚠ For CUDA users: pre-built wheels are specified in requirements.txt
 pip install -r requirements.txt
 
-# Run the demo (if you have a trained model)
-python app.py --checkpoint checkpoints/best.pt
+# 4) Prepare (or download) your dataset – see next section
+
+# 5) Train
+python train.py --config config/base_vits.json --output_dir checkpoints
+
+# 6) Launch the interactive demo once `checkpoints/best_model.pth` appears
+python app.py --checkpoint checkpoints/best_model.pth
 ```
 
 ## 📋 Requirements
@@ -89,13 +98,20 @@ This implementation is based on the [VITS paper](https://arxiv.org/abs/2106.0610
 
 ### Preparation Steps
 
-1. Place raw audio files in `datasets/raw/`
-2. Create file lists:
+1. Place your **normalised** WAVs in `datasets/normalized/` (16-bit 22 050 Hz).
+2. Create train/validation file-lists (95 % / 5 % split) with matching
+   transcriptions:
+
 ```bash
-python data/tools/prepare_filelist.py --wavs datasets/raw/ --output data/filelists/ --val-ratio 0.05
+python data/tools/prepare_filelist.py \
+       --wavs datasets/normalized \
+       --output data/filelists \
+       --transcriptions datasets/normalized/metan.txt \
+       --val-ratio 0.05
 ```
 
-3. (Optional) Process audio using the built-in preprocessing in the training pipeline
+The script accepts `path|sentence` lines (no need for CSV commas) and writes
+`data/filelists/train.txt` & `val.txt` automatically.
 
 ## 🏋️ Training
 
@@ -107,64 +123,29 @@ Edit `config/base_vits.json` to adjust hyperparameters:
 - Network dimensions
 - Training schedule
 
-### Start Training
+### Start / Resume Training
 
 ```bash
+# fresh run
 python train.py --config config/base_vits.json --output_dir checkpoints
+
+# resume
+python train.py --config config/base_vits.json --checkpoint checkpoints/checkpoint_0050.pth
 ```
 
-### Training Phases
-
-For best results, follow this training schedule:
-1. **Phase 1 (Base Model)**
-   - Batch Size: 16
-   - Learning Rate: 2e-4
-   - Steps: ~100k
-   - Command: `python train.py --config config/base_vits.json`
-
-2. **Phase 2 (Fine-tuning)**
-   - Batch Size: 8
-   - Learning Rate: 5e-5
-   - Steps: ~50k
-   - Command: `python train.py --config config/base_vits.json --checkpoint checkpoints/checkpoint_100k.pt --lr 5e-5 --batch_size 8`
-
-### Resume Training
-
-```bash
-python train.py --config config/base_vits.json --checkpoint checkpoints/checkpoint_50k.pt
-```
-
-### Monitor Training
-
-```bash
-tensorboard --logdir=logs
-```
+📝 *Tip:* keep `tensorboard --logdir=logs` open in another terminal to monitor
+loss curves in real time.
 
 ## 🔊 Inference
 
-### Command Line
+### Interactive Demo (Gradio)
 
 ```bash
-python azeri_tts_pipeline.py --text "Salam dünya!" --checkpoint checkpoints/best.pt --output output.wav
+python app.py --checkpoint checkpoints/best_model.pth
 ```
 
-### Interactive Demo
-
-```bash
-python app.py --config config/base_vits.json --checkpoint checkpoints/best.pt
-```
-
-This launches a Gradio web interface where you can:
-- Input Azerbaijani text for synthesis
-- Upload reference audio for voice cloning
-- Adjust generation parameters
-- Download synthesized audio
-
-### Voice Cloning
-
-```bash
-python azeri_tts_pipeline.py --text "Salam dünya!" --checkpoint checkpoints/best.pt --reference_audio path/to/reference.wav --output output.wav
-```
+Open the URL printed in the console; you can type text, listen, and download
+the waveform.  Voice-cloning helpers live in the notebook for now.
 
 ## 📁 Project Structure
 
@@ -298,5 +279,5 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## 📧 Contact
 
 For questions, issues, or collaboration:
-- GitHub Issues: [Create an issue](https://github.com/your-username/tts-vits/issues)
+- GitHub Issues: [Create an issue](https://github.com/tunjay-h/tts-vits/issues)
 - Email: your.email@example.com

@@ -1,1 +1,5 @@
-datasets/raw/02.wav|İlham, ağıl, istedad o yerdə dəyərlidir ki, dəyəri verdir. 
+datasets/normalized/0017.wav|az-a  istinadən xəbər verir ki, bu sözləri türkiyəli siyasi ekspert Lütfi Özşahin bildirib.
+datasets/normalized/0011.wav|Koronavirus epidemiyası səbəbindən bir çox müəssisə Çin şəhərlərində iş yerlərini ya bağlatıb və ya azaldılmış iş rejiminə keçib.
+datasets/normalized/0028.wav|Bunların 357 180 nəfəri sağalıb, 95 813 nəfəri isə ölüb.
+datasets/normalized/0046.wav|Saymon anası üçün topladığı çiçəkləri kenqururya uzadır.
+datasets/normalized/0096.wav|Danılmaz həqiqətdir ki, hər bir dövlət başçısı dünya miqyasında bu qüdrəti nümayiş etdirmir.
