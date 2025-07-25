@@ -34,3 +34,4 @@ einops==0.7.0
 
 # Optional: speech preprocessing / speaker embeddings
 speechbrain==0.5.16
+    

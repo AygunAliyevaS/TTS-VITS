@@ -173,13 +173,30 @@ class VITSTrainer:
         for i, batch in enumerate(pbar):
             # Move batch to device
             text_padded = batch['text_padded'].to(self.device)
-            text_lengths = batch['text_lengths'].to(self.device)
             audio_padded = batch['audio_padded'].to(self.device)
-            audio_lengths = batch['audio_lengths'].to(self.device)
             
-            # Forward pass
+            # Optional conditioning tensors
+            speaker_ids = batch.get('speaker_ids')
+            if speaker_ids is not None:
+                speaker_ids = speaker_ids.to(self.device)
+            emotion_ids = batch.get('emotion_ids')
+            if emotion_ids is not None:
+                emotion_ids = emotion_ids.to(self.device)
+            lang_ids = batch.get('language_ids')
+            if lang_ids is not None:
+                lang_ids = lang_ids.to(self.device)
+            ref_mels = batch.get('ref_mels')
+            if ref_mels is not None:
+                ref_mels = ref_mels.to(self.device)
+            
+            # Forward pass with new conditioning
             output, dur_logits, mu, log_var, mu_p, log_var_p = self.model(
-                text_padded, audio_padded
+                text_padded,
+                audio_padded,
+                speaker_ids=speaker_ids,
+                emotion_ids=emotion_ids,
+                lang_ids=lang_ids,
+                ref_mels=ref_mels
             )
             
             # Compute mel-spectrogram from model output waveform
@@ -272,9 +289,27 @@ class VITSTrainer:
                 text_padded = batch['text_padded'].to(self.device)
                 audio_padded = batch['audio_padded'].to(self.device)
                 
+                speaker_ids = batch.get('speaker_ids')
+                if speaker_ids is not None:
+                    speaker_ids = speaker_ids.to(self.device)
+                emotion_ids = batch.get('emotion_ids')
+                if emotion_ids is not None:
+                    emotion_ids = emotion_ids.to(self.device)
+                lang_ids = batch.get('language_ids')
+                if lang_ids is not None:
+                    lang_ids = lang_ids.to(self.device)
+                ref_mels = batch.get('ref_mels')
+                if ref_mels is not None:
+                    ref_mels = ref_mels.to(self.device)
+                
                 # Forward pass
                 output, dur_logits, mu, log_var, mu_p, log_var_p = self.model(
-                    text_padded, audio_padded
+                    text_padded,
+                    audio_padded,
+                    speaker_ids=speaker_ids,
+                    emotion_ids=emotion_ids,
+                    lang_ids=lang_ids,
+                    ref_mels=ref_mels
                 )
                 
                 # Compute mel-spectrogram from model output waveform

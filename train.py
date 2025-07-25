@@ -83,14 +83,19 @@ def main():
     device = prepare_device(args.n_gpus)
     logger.info(f"Using device: {device}")
     
-    # Initialize model
+    # Initialize TextProcessor first so we can compute vocabulary size dynamically
+    logger.info("Initializing TextProcessor to compute vocabulary size")
+    text_processor = TextProcessor(config)
+    config['model']['vocab_size'] = len(text_processor.chars)
+    logger.info(f"Set vocab_size to {config['model']['vocab_size']}")
+
+    # Now initialize model
     logger.info("Initializing VITS model")
     model = VITS(config)
-    
-    # Initialize processors
-    logger.info("Initializing processors")
+
+    # Initialize AudioProcessor (depends on config but not on model)
+    logger.info("Initializing AudioProcessor")
     audio_processor = AudioProcessor(config)
-    text_processor = TextProcessor(config)
     
     # Initialize datasets
     logger.info("Initializing datasets")

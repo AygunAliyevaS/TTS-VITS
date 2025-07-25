@@ -107,7 +107,25 @@ class VITSDataset(Dataset):
                     logger.warning(f"Audio file does not exist, skipping: {audio_path}")
                     continue
                     
-                # Add optional speaker ID if available
+                # Optional IDs
+                speaker_id = None
+                emotion_id = None
+                language_id = None
+                if len(parts) > 2 and parts[2]:
+                    try:
+                        speaker_id = int(parts[2])
+                    except ValueError:
+                        logger.warning(f"Invalid speaker ID, using default: {parts[2]}")
+                if len(parts) > 3 and parts[3]:
+                    try:
+                        emotion_id = int(parts[3])
+                    except ValueError:
+                        logger.warning(f"Invalid emotion ID, using default: {parts[3]}")
+                if len(parts) > 4 and parts[4]:
+                    try:
+                        language_id = int(parts[4])
+                    except ValueError:
+                        logger.warning(f"Invalid language ID, using default: {parts[4]}")
                 speaker_id = None
                 if len(parts) > 2 and parts[2]:
                     try:
@@ -118,7 +136,9 @@ class VITSDataset(Dataset):
                 items.append({
                     'audio_path': audio_path,
                     'text': text,
-                    'speaker_id': speaker_id
+                    'speaker_id': speaker_id,
+                    'emotion_id': emotion_id,
+                    'language_id': language_id
                 })
                 
         return items
@@ -165,6 +185,12 @@ class VITSDataset(Dataset):
         # Process text
         text_encoded = self.text_processor.encode_text(item['text'])
         
+        # ------------------------------------------------------------------
+        # Prepare reference mel for prosody (simple heuristic – first N frames)
+        # ------------------------------------------------------------------
+        prosody_frames = self.config['model'].get('prosody_ref_frames', 80)  # ~0.5 s if hop 256 at 48 kHz
+        ref_mel = audio_data['mel_spectrogram'][..., :prosody_frames]
+
         # Prepare return dictionary
         result = {
             'text': text_encoded,
@@ -172,7 +198,8 @@ class VITSDataset(Dataset):
             'audio': audio_data['mel_spectrogram'],
             'waveform': audio_data['waveform'].squeeze(0),  # Remove channel dim
             'audio_path': item['audio_path'],
-            'audio_length': audio_data['waveform'].shape[1]
+            'audio_length': audio_data['waveform'].shape[1],
+            'ref_mel': ref_mel
         }
         
         # Add speaker ID if available
@@ -183,83 +210,112 @@ class VITSDataset(Dataset):
     
     @staticmethod
     def collate_fn(batch: List[Dict]) -> Dict:
+        """Create a padded batch from a list of dataset items.
+
+        Each ``item`` contains at least the keys ``text``, ``audio`` (mel), and ``waveform``.
+        Optional keys: ``speaker_id``, ``emotion_id``, ``language_id``, ``ref_mel``.
         """
-        Collate function for DataLoader.
-        
-        Pads sequences to the same length and creates a batch.
-        
-        Args:
-            batch (List[Dict]): List of individual items
-                
-        Returns:
-            Dict: Batched data with padded sequences
-        """
-        # Get max lengths
+        # ------------------------------------------------------------------
+        # Prepare dynamic dimensions
+        # ------------------------------------------------------------------
         max_text_len = max(item['text'].shape[0] for item in batch)
-        max_audio_len = max(item['audio'].shape[1] for item in batch)
-        max_waveform_len = max(item['waveform'].shape[0] for item in batch)
-        
-        # Initialize tensors
-        text_padded = torch.zeros(len(batch), max_text_len, dtype=torch.long)
-        text_lengths = torch.zeros(len(batch), dtype=torch.long)
-        
-        audio_padded = torch.zeros(
-            len(batch), 
-            batch[0]['audio'].shape[0],  # n_mel_channels
-            max_audio_len
-        )
-        audio_lengths = torch.zeros(len(batch), dtype=torch.long)
-        
-        waveform_padded = torch.zeros(len(batch), max_waveform_len)
-        
-        # Store original values for reference
-        ids = []
-        text_raw = []
-        audio_paths = []
-        
-        # Collect speaker IDs if available
-        has_speaker_ids = 'speaker_id' in batch[0]
-        if has_speaker_ids:
-            speaker_ids = torch.zeros(len(batch), dtype=torch.long)
-        
+        n_mel_channels = batch[0]['audio'].shape[0]
+        max_mel_len = max(item['audio'].shape[1] for item in batch)
+        max_wav_len = max(item['waveform'].shape[0] for item in batch)
+
+        # Reference‐mel lengths (may be shorter than full mel)
+        has_ref = all('ref_mel' in item for item in batch)
+        max_ref_len = max(item['ref_mel'].shape[1] for item in batch) if has_ref else 0
+
+        B = len(batch)
+
+        # ------------------------------------------------------------------
+        # Allocate padded tensors
+        # ------------------------------------------------------------------
+        text_padded = torch.zeros(B, max_text_len, dtype=torch.long)
+        text_lengths = torch.zeros(B, dtype=torch.long)
+
+        mel_padded = torch.zeros(B, n_mel_channels, max_mel_len)
+        mel_lengths = torch.zeros(B, dtype=torch.long)
+
+        wav_padded = torch.zeros(B, max_wav_len)
+
+        if has_ref:
+            ref_padded = torch.zeros(B, n_mel_channels, max_ref_len)
+            ref_lengths = torch.zeros(B, dtype=torch.long)
+        else:
+            ref_padded = None
+            ref_lengths = None
+
+        # Optional ID tensors
+        has_spk = all('speaker_id' in item for item in batch)
+        has_emo = all('emotion_id' in item for item in batch)
+        has_lang = all('language_id' in item for item in batch)
+        if has_spk:
+            speaker_ids = torch.zeros(B, dtype=torch.long)
+        if has_emo:
+            emotion_ids = torch.zeros(B, dtype=torch.long)
+        if has_lang:
+            language_ids = torch.zeros(B, dtype=torch.long)
+
+        ids, text_raw, audio_paths = [], [], []
+
+        # ------------------------------------------------------------------
+        # Fill tensors
+        # ------------------------------------------------------------------
         for i, item in enumerate(batch):
-            # Text
-            text = item['text']
-            text_padded[i, :text.shape[0]] = text
-            text_lengths[i] = text.shape[0]
-            
-            # Audio (mel spectrogram)
-            audio = item['audio']
-            audio_padded[i, :, :audio.shape[1]] = audio
-            audio_lengths[i] = audio.shape[1]
-            
-            # Waveform
-            waveform = item['waveform']
-            waveform_padded[i, :waveform.shape[0]] = waveform
-            
-            # Reference info
+            # text
+            t = item['text']
+            text_padded[i, : t.shape[0]] = t
+            text_lengths[i] = t.shape[0]
+
+            # mel
+            m = item['audio']
+            mel_padded[i, :, : m.shape[1]] = m
+            mel_lengths[i] = m.shape[1]
+
+            # waveform
+            w = item['waveform']
+            wav_padded[i, : w.shape[0]] = w
+
+            # reference mel
+            if has_ref:
+                r = item['ref_mel']
+                ref_padded[i, :, : r.shape[1]] = r
+                ref_lengths[i] = r.shape[1]
+
+            # IDs
+            if has_spk:
+                speaker_ids[i] = item['speaker_id']
+            if has_emo:
+                emotion_ids[i] = item['emotion_id']
+            if has_lang:
+                language_ids[i] = item['language_id']
+
+            # meta
             ids.append(i)
             text_raw.append(item['text_raw'])
             audio_paths.append(item['audio_path'])
-            
-            # Speaker ID if available
-            if has_speaker_ids:
-                speaker_ids[i] = item['speaker_id']
-        
-        # Create output batch
-        output = {
+
+        batch_out = {
             'text_padded': text_padded,
             'text_lengths': text_lengths,
-            'audio_padded': audio_padded,
-            'audio_lengths': audio_lengths,
-            'waveform_padded': waveform_padded,
+            'audio_padded': mel_padded,
+            'audio_lengths': mel_lengths,
+            'waveform_padded': wav_padded,
             'ids': ids,
             'text_raw': text_raw,
-            'audio_paths': audio_paths
+            'audio_paths': audio_paths,
         }
-        
-        # Add speaker IDs if available
-        if has_speaker_ids:
-            output['speaker_ids'] = speaker_ids
-            
-        return output 
+        if has_ref:
+            batch_out['ref_mels'] = ref_padded
+            batch_out['ref_lengths'] = ref_lengths
+        if has_spk:
+            batch_out['speaker_ids'] = speaker_ids
+        if has_emo:
+            batch_out['emotion_ids'] = emotion_ids
+        if has_lang:
+            batch_out['language_ids'] = language_ids
+
+        # return the batched dictionary
+        return batch_out 

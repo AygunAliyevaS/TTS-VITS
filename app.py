@@ -79,7 +79,7 @@ class TTS_App:
             logger.error(traceback.format_exc())
             raise RuntimeError(f"Failed to load model: {str(e)}")
     
-    def generate_speech(self, text, speaker_id=0, speed=1.0, seed=None):
+    def generate_speech(self, text, speaker_id=0, emotion_id=0, language_id=0, speed=1.0, pitch_shift=0, ref_audio=None, seed=None):
         """
         Generate speech from text.
         
@@ -96,7 +96,7 @@ class TTS_App:
             logger.warning("Empty input text")
             return (self.config['data']['sampling_rate'], torch.zeros(1000).numpy())
         
-        logger.info(f"Generating speech for text: '{text}', speaker_id: {speaker_id}, speed: {speed}")
+        logger.info(f"Generating speech for text: '{text}', speaker_id: {speaker_id}, emotion_id: {emotion_id}, language_id: {language_id}, speed: {speed}, pitch: {pitch_shift}")
         
         # Set seed for reproducibility if provided
         if seed is not None:
@@ -114,7 +114,27 @@ class TTS_App:
             # Generate audio
             with torch.no_grad():
                 start_time = time.time()
-                audio = self.model.generate(encoded_text, speed_adjustment=speed)
+                # Prepare optional reference mel
+                ref_mel = None
+                if ref_audio is not None:
+                    import torchaudio
+                    from data.processing import AudioProcessor
+                    wav_ref, sr = torchaudio.load(ref_audio)
+                    if sr != self.config['data']['sampling_rate']:
+                        wav_ref = torchaudio.functional.resample(wav_ref, sr, self.config['data']['sampling_rate'])
+                    ap = AudioProcessor(self.config)
+                    mel = ap.waveform_to_mel(wav_ref.squeeze(0))
+                    ref_mel = mel.unsqueeze(0).to(self.device)
+                
+                audio = self.model.generate(
+                    encoded_text,
+                    speed_adjustment=speed,
+                    speaker_id=speaker_id,
+                    emotion_id=emotion_id,
+                    lang_id=language_id,
+                    ref_mel=ref_mel,
+                    pitch_shift=pitch_shift
+                )
                 logger.debug(f"Audio generated in {time.time() - start_time:.3f} seconds")
             
             # Convert to numpy for Gradio
@@ -150,8 +170,7 @@ def create_gradio_interface():
         tts_app = TTS_App(args.config, args.checkpoint)
         
         # Example Azerbaijani texts
-        examples = [
-            ["Salam dünya, bu bir səs sintezi nümunəsidir."],
+        examples = [["Salam dünya, bu bir səs sintezi nümunəsidir.",0,0,0,1.0,0,None],
             ["Azərbaycan dili gözəl bir dildir."],
             ["Bu sistem Azərbaycan dili üçün hazırlanmışdır."]
         ]
@@ -165,22 +184,13 @@ def create_gradio_interface():
                     placeholder="Azərbaycanca mətn daxil edin...",
                     lines=3
                 ),
-                gr.Number(
-                    label="Speaker ID",
-                    value=0,
-                    precision=0
-                ),
-                gr.Slider(
-                    label="Speed",
-                    minimum=0.5,
-                    maximum=2.0,
-                    step=0.1,
-                    value=1.0
-                ),
-                gr.Number(
-                    label="Random Seed (optional)",
-                    value=None
-                )
+                gr.Number(label="Speaker ID", value=0, precision=0),
+                gr.Number(label="Emotion ID", value=0, precision=0),
+                gr.Number(label="Language ID", value=0, precision=0),
+                gr.Slider(label="Speed", minimum=0.5, maximum=2.0, step=0.1, value=1.0),
+                gr.Slider(label="Pitch Shift (semitones)", minimum=-12, maximum=12, step=1, value=0),
+                gr.Audio(label="Reference Audio (optional)", type="filepath", source="upload"),
+                gr.Number(label="Random Seed (optional)", value=None)
             ],
             outputs=gr.Audio(
                 label="Generated Speech"
